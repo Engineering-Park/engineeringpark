@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Zephyrland</title>
+    <meta name="description" content="Decentraland parcel of land including the coordinates 55,110.">
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+  </head>
+  <body>
+    <a-scene stats>
+      <a-assets>
+        <img id="lightzephyrImage" src="assets/images/lightzephyr.jpg">
+        <img id="UV_Grid_Sm" src="assets/images/UV_Grid_Sm.jpg">
+        <img id="dcl_ep_c7" src="assets/images/dcl_ep_c7.png">
+        <img id="skyTexture" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg" crossorigin="anonymous">
+
+        <a-mixin id="cube"
+                 geometry="primitive: box; height: 1.0; width: 1.0; depth: 1.0"
+                 material="color: red; opacity: 0.5"></a-mixin>
+        <a-mixin id="tile"
+                 geometry="primitive: plane; height: 10; width: 10"
+                 material="src: #dcl_ep_c7"
+                 rotation="-90 0 0"
+                 text="color: black; align: center; width: 50"></a-mixin>
+      </a-assets>
+
+      <a-sky src="#skyTexture" rotation="0 180 0"></a-sky>
+      <a-grid></a-grid>
+
+	    <a-entity id="cameraRig" position="0 1.6 0">
+        <!-- Camera -->
+        <a-entity id="head" camera wasd-controls="fly: true" look-controls></a-entity>
+	      <!-- Hand controls that look like the Oculus Touch controllers -->
+        <a-entity oculus-touch-controls="hand: left"></a-entity>
+        <a-entity oculus-touch-controls="hand: right"
+                  teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; type: line; button: trigger; maxLength: 20"></a-entity>
+	    </a-entity>
+
+      <!-- Content -->
+      <a-entity class="cube" mixin="cube" position="0.5 0.5 -0.5"></a-entity>
+      <a-entity class="cube" mixin="cube" position="9.5 0.5 -0.5"></a-entity>
+      <a-entity class="cube" mixin="cube" position="0.5 0.5 -9.5"></a-entity>
+      <a-entity class="cube" mixin="cube" position="9.5 0.5 -9.5"></a-entity>
+
+      <!-- Plane at the origin for demo purposes (it looks cool) -->
+      <a-entity position="5 0.5 -5"
+                rotation="-90 0 0"
+                geometry="width:10;height:10;primitive:plane"
+                material="src:#UV_Grid_Sm"></a-entity>
+
+      <!-- Decentraland: left most 3 -->
+      <a-entity class="tile" mixin="tile" position="5 0.5 -25" text="value: 50,109"></a-entity>
+      <a-entity class="tile" mixin="tile" position="15 0.5 -25" text="value: 51,109"></a-entity>
+      <a-entity class="tile" mixin="tile" position="15 0.5 -35" text="value: 51,110"></a-entity>
+      <!-- Decentraland: group of 6 in the middle -->
+      <a-entity class="tile" mixin="tile" position="25 0.5 -25" text="value: 52,109"></a-entity>
+      <a-entity class="tile" mixin="tile" position="35 0.5 -25" text="value: 53,109"></a-entity>
+      <a-entity class="tile" mixin="tile" position="25 0.5 -15" text="value: 52,108"></a-entity>
+      <a-entity class="tile" mixin="tile" position="35 0.5 -15" text="value: 53,108"></a-entity>
+      <a-entity class="tile" mixin="tile" position="25 0.5 -5" text="value: 52,107"></a-entity>
+      <a-entity class="tile" mixin="tile" position="35 0.5 -5" text="value: 53,107"></a-entity>
+      <!-- Decentraland: right most 4 -->
+      <a-entity class="tile" mixin="tile" position="45 0.5 -25" text="value: 54,109"></a-entity>
+      <a-entity class="tile" mixin="tile" position="55 0.5 -25" text="value: 55,109"></a-entity>
+      <a-entity class="tile" mixin="tile" position="55 0.5 -35" text="value: 55,110"></a-entity>
+      <a-entity class="tile" mixin="tile" position="55 0.5 -45" text="value: 55,111"></a-entity>
+
+    </a-scene>
+  </body>
+</html>
