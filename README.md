@@ -9,4 +9,4 @@ Index to the OSET documentation:
 
 For **user documentation**, visit the [OSE User Guide](https://opense.gitbook.io/ose-user-guide/).
 
-For **developer documentation**, visit the [OSE Toolkit Wiki](https://github.com/lightzephyr/osevr/wiki).
+For **developer documentation**, visit the [OSE VR Wiki](https://github.com/lightzephyr/osevr/wiki).
