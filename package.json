@@ -1,0 +1,15 @@
+{
+  "name": "osevr",
+  "version": "0.0.0",
+  "description": "Open Systems Engineering VR",
+  "scripts": {
+    "build": "metaverse-compiler build.json",
+    "watch": "metaverse-compiler build.json --watch"
+  },
+  "author": "Tristan Martindale",
+  "license": "MIT",
+  "devDependencies": {
+    "metaverse-api": "^3.1.0",
+    "typescript": "^2.7.2"
+  }
+}
