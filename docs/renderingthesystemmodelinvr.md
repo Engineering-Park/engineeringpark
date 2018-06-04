@@ -42,4 +42,4 @@ sphere | yellow | Function | does not have specified by
 box | yellow | Component | does not have specified by
 
 ---
-[Back to oset on GitHub](https://github.com/lightzephyr/oset)
+[Back to osevr on GitHub](https://github.com/lightzephyr/osevr)

@@ -9,4 +9,4 @@ This page serves as a record of design decisions:
 | 2018-06-02 | **Relationships are captured by an element's relationships attribute.** | An alternative approach would be to have relationships be there own elements - but this add complexity without any obvious gain. Relationships cannot exist without the elements that are relating to each other and therefore, semantically, it makes more sense to define the relationships together with the entities than to split them out by themselves. | Schema |
 
 ---
-[Back to oset on GitHub](https://github.com/lightzephyr/oset)
+[Back to osevr on GitHub](https://github.com/lightzephyr/osevr)
