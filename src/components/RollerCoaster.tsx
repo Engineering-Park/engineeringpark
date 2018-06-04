@@ -1,19 +1,16 @@
-import { createElement, ISimplifiedNode } from 'metaverse-api'
+import { createElement } from 'metaverse-api'
+import { ComposeableScene, SceneProps } from '../composeablescene'
 
 const networkHz = 6;
 const interval = 1000 / networkHz;
 
-export interface IComposeableScene {
-  render(): ISimplifiedNode;
-  state: any;
+interface State {
+  time: number;
 }
 
-export default class RollerCoaster implements IComposeableScene {
-  state: {
-    time: number
-  };
-
-  constructor() {
+export default class RollerCoaster extends ComposeableScene<SceneProps, State> {
+  constructor(props?: SceneProps) {
+    super(props);
     this.state = {
       time: 0
     };
@@ -29,7 +26,7 @@ export default class RollerCoaster implements IComposeableScene {
     const z = Math.sin(time) * size;
 
     return (
-        <entity position={{ x: 5, y: 4, z: 5 }}>
+        <entity position={this.props.position} rotation={this.props.rotation}>
           <entity
             id="train"
             position={{ x, y, z }}

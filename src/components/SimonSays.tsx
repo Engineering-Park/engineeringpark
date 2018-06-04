@@ -1,9 +1,10 @@
-import { createElement, ISimplifiedNode } from 'metaverse-api'
+import { createElement } from 'metaverse-api'
+import { ComposeableScene, SceneProps } from '../composeablescene'
 import { Button } from "./Button";
 import { Panel, Panels } from './Panels'
 // import { sleep } from "../utils";
 
-export interface IState {
+interface State {
   difficulty: number;
   sequence: Panel[];
   guessSequence: Panel[];
@@ -11,19 +12,17 @@ export interface IState {
   inputLocked: boolean;
 }
 
-export interface IComposeableScene {
-  render(): ISimplifiedNode;
-  state: IState;
-}
-
-export default class SimonSays implements IComposeableScene{
-  state = {
-    difficulty: 0,
-    sequence: [],
-    guessSequence: [],
-    activePanel: null,
-    inputLocked: true
-  };
+export default class SimonSays extends ComposeableScene<SceneProps, State> {
+  constructor(props?: SceneProps) {
+    super(props);
+    this.state = {
+      difficulty: 0,
+      sequence: [],
+      guessSequence: [],
+      activePanel: null,
+      inputLocked: true
+    };
+  }
 
   // sceneDidMount() {
   //   this.eventSubscriber.on(`${Panel.GREEN}_click`, () => {
@@ -119,7 +118,7 @@ export default class SimonSays implements IComposeableScene{
     const { activePanel } = this.state;
 
     return (
-      <scene position={{ x: 5, y: 0, z: 5 }}>
+      <entity position={this.props.position} rotation={this.props.rotation}>
         <Button position={{ x: 0, y: 1.5, z: 0 }} />
         <Panels position={{ x: 0, y: 1, z: 0 }} activePanel={activePanel} />
         <gltf-model
@@ -127,7 +126,7 @@ export default class SimonSays implements IComposeableScene{
           position={{ x: 0, y: 0.05, z: 0 }}
           scale={{ x: 0.99, y: 0.99, z: 0.99 }}
         />
-      </scene>
+      </entity>
     );
   }
 }
