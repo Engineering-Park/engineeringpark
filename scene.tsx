@@ -11,13 +11,13 @@ export default class OSEVRScene extends ScriptableScene {
     this.components = [];
 
     let rcProps = {
-      position: { x: -5, y: 4, z: 5 },
+      position: { x: 30, y: 4, z: 0 },
       rotation: { x: 0, y: 0, z: 0 }
     }
 
     let ssProps = {
-      position: { x: 5, y: 0, z: 5 },
-      rotation: { x: 0, y: 0, z: 0 }
+      position: { x: 0, y: 0, z: 0 },
+      rotation: { x: 0, y: 180, z: 0 }
     }
 
     this.components.push(new RollerCoaster(rcProps));
