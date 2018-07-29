@@ -18,5 +18,7 @@ export abstract class ComposeableScene<Props, State> {
     }
   }
 
+  public clickCallback() {}
+
   public abstract render(): ISimplifiedNode
 }
