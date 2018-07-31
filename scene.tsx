@@ -1,4 +1,4 @@
-import { createElement, ScriptableScene } from 'metaverse-api'
+import { createElement, ISimplifiedNode, ScriptableScene } from 'metaverse-api'
 import { ComposeableScene } from './src/composeablescene'
 import RollerCoaster from "./src/components/RollerCoaster";
 import SimonSays from "./src/components/SimonSays";
@@ -8,33 +8,37 @@ interface State {
     updateToggle: boolean
 }
 
+interface ComposeableSceneContainer {
+  [index: string]: ComposeableScene<any, any>
+}
+
 export default class OSEVRScene extends ScriptableScene<any, State> {
-  components: Array<ComposeableScene<any, any>>;
+  private components: ComposeableSceneContainer;
 
   constructor(props: any) {
     super(props);
     this.state = { updateToggle: false };
-    this.components = [];
+    this.components = {};
 
-    this.components.push(new RollerCoaster({
+    this.components['RollerCoaster'] = new RollerCoaster({
       position: { x: 30, y: 4, z: 0 },
       rotation: { x: 0, y: 0, z: 0 }
-    }));
+    });
 
-    this.components.push(new SimonSays({
+    this.components['SimonSays'] = new SimonSays({
       position: { x: 0, y: 0, z: 0 },
       rotation: { x: 0, y: 180, z: 0 }
-    }));
+    });
 
-    this.components.push(new Pedestal({
+    this.components['Pedestal'] = new Pedestal({
       position: { x: 20, y: 0, z: 0 },
       rotation: { x: 0, y: 0, z: 0 }
-    }));
+    });
   }
 
   public async sceneDidMount(){
     this.eventSubscriber.on(`pedestal_click`, () => {
-      this.components[2].clickCallback();
+      this.components['Pedestal'].clickCallback();
       this.setState({ updateToggle: !this.state.updateToggle });
     });
   }
@@ -48,6 +52,14 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
   }
 
   private renderComponents() {
-    return this.components.map($ => $.render());
+    let renderedComponents: Array<ISimplifiedNode> = [];
+
+    for(var key in this.components) {
+      if(this.components.hasOwnProperty(key)) {
+        renderedComponents.push(this.components[key].render());
+      }
+    }
+
+    return renderedComponents;
   }
 }
