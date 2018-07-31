@@ -2,10 +2,12 @@ import { createElement, ISimplifiedNode, ScriptableScene } from 'metaverse-api'
 import { ComposeableScene } from './src/composeablescene'
 import RollerCoaster from "./src/components/RollerCoaster";
 import SimonSays from "./src/components/SimonSays";
-import Pedestal from "./src/components/Pedestal";
+import { Pedestal } from "./src/components/Pedestal";
+
+const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b', '#6699cc'];
 
 interface State {
-    updateToggle: boolean
+    pedestalColor: string | number;
 }
 
 interface ComposeableSceneContainer {
@@ -17,7 +19,7 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
 
   constructor(props: any) {
     super(props);
-    this.state = { updateToggle: false };
+    this.state = { pedestalColor: colors[0] };
     this.components = {};
 
     this.components['RollerCoaster'] = new RollerCoaster({
@@ -29,17 +31,13 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
       position: { x: 0, y: 0, z: 0 },
       rotation: { x: 0, y: 180, z: 0 }
     });
-
-    this.components['Pedestal'] = new Pedestal({
-      position: { x: 20, y: 0, z: 0 },
-      rotation: { x: 0, y: 0, z: 0 }
-    });
   }
 
   public async sceneDidMount(){
     this.eventSubscriber.on(`pedestal_click`, () => {
-      this.components['Pedestal'].clickCallback();
-      this.setState({ updateToggle: !this.state.updateToggle });
+      let col = Math.floor(Math.random() * colors.length);
+      this.setState({pedestalColor: colors[col]});
+      console.log(colors[col]);
     });
   }
 
@@ -47,6 +45,11 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         {this.renderComponents()}
+        <Pedestal
+          id = 'pedestal'
+          position = {{x:20, y:0.5, z:0}}
+          color = {this.state.pedestalColor}
+        />
       </scene>
     );
   }

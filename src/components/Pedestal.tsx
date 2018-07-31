@@ -1,36 +1,25 @@
-import { createElement } from 'metaverse-api'
-import { ComposeableScene, SceneProps } from '../composeablescene'
+import { createElement, Vector3Component } from 'metaverse-api'
 
-interface State {
-    color: string;
+export interface Props {
+  id: string;
+  position: Vector3Component;
+  color: string | number;
 }
 
-const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b', '#6699cc'];
-
-export default class Pedestal extends ComposeableScene<SceneProps, State> {
-  constructor(props?: SceneProps) {
-    super(props);
-    this.state = {
-      color: '#8b96a0'
-    };
-  }
-
-  public clickCallback() {
-    let col = Math.floor(Math.random() * colors.length);
-    this.state.color = colors[col];
-  }
-
-  public render() {
-    return (
-      <entity position={this.props.position} rotation={this.props.rotation}>
-        <cylinder id='pedestal'
-          position={{x:0, y:0.5, z:0}}
-          color= {this.state.color}
-          radiusBottom={0.8}
-          radiusTop={1.1}
-          scale={{x:0.35 , y:0.4, z: 0.35}}
-        />
-      </entity>
-    );
-  }
+export const Pedestal = (props: Props) => {
+  return (
+    <entity position={props.position}>
+      <box
+        id={props.id}
+        color= {props.color}
+        scale={{x:0.45 , y:0.7, z: 0.45}}
+      />
+      <box
+        id={props.id}
+        position= {{x:0, y:0.3, z:0}}
+        color= {props.color}
+        scale={{x:0.55 , y:0.20, z: 0.55}}
+      />
+    </entity>
+  );
 }
