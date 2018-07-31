@@ -8,6 +8,7 @@ const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b'
 
 interface State {
     pedestalColor: string | number;
+    dogAngle: number;
 }
 
 interface ComposeableSceneContainer {
@@ -19,7 +20,10 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
 
   constructor(props: any) {
     super(props);
-    this.state = { pedestalColor: colors[0] };
+    this.state = {
+      pedestalColor: colors[0],
+      dogAngle: 0
+    };
     this.components = {};
 
     this.components['RollerCoaster'] = new RollerCoaster({
@@ -39,6 +43,10 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
       this.setState({pedestalColor: colors[col]});
       console.log(colors[col]);
     });
+
+    setInterval(() => {
+      this.setState({ dogAngle: this.state.dogAngle + 2})
+    }, 100)
   }
 
   public async render() {
@@ -50,6 +58,13 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
           position = {{x:20, y:0.5, z:0}}
           color = {this.state.pedestalColor}
         />
+      <gltf-model
+        src = 'assets/angry-dog.gltf'
+        scale = {0.3}
+        position={{x:20, y:1.4, z:0}}
+        rotation={{y:this.state.dogAngle, x:0, z:0}}
+        transition={{ rotation: { duration: 100, timing: 'linear' } }}
+      />
       </scene>
     );
   }
