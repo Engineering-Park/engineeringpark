@@ -9,6 +9,7 @@ const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b'
 interface State {
     pedestalColor: string | number;
     dogAngle: number;
+    donutAngle: number;
 }
 
 interface ComposeableSceneContainer {
@@ -22,7 +23,8 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     super(props);
     this.state = {
       pedestalColor: colors[0],
-      dogAngle: 0
+      dogAngle: 0,
+      donutAngle: 0
     };
     this.components = {};
 
@@ -37,7 +39,7 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     });
   }
 
-  public async sceneDidMount(){
+  public async sceneDidMount() {
     this.eventSubscriber.on(`pedestal_click`, () => {
       let col = Math.floor(Math.random() * colors.length);
       this.setState({pedestalColor: colors[col]});
@@ -47,6 +49,11 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     setInterval(() => {
       this.setState({ dogAngle: this.state.dogAngle + 2})
     }, 100)
+
+    this.subscribeTo('positionChanged', e => {
+      const rotateDonuts = ( e.position.x + e.position.z) * 10
+      this.setState({donutAngle: rotateDonuts})
+    })
   }
 
   public async render() {
@@ -54,23 +61,30 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
       <scene position={{ x: 5, y: 0, z: 5 }}>
         {this.renderComponents()}
         <Pedestal
-          id = 'pedestal'
-          position = {{x:20, y:0.5, z:0}}
-          color = {this.state.pedestalColor}
+          id='pedestal'
+          position={{x:20, y:0.5, z:0}}
+          color={this.state.pedestalColor}
         />
-      <gltf-model
-        src = 'assets/angry-dog.gltf'
-        scale = {0.3}
-        position={{x:20, y:1.4, z:0}}
-        rotation={{y:this.state.dogAngle, x:0, z:0}}
-        transition={{ rotation: { duration: 100, timing: 'linear' } }}
-      />
+        <gltf-model
+          src='assets/angry-dog.gltf'
+          scale={0.3}
+          position={{x:20, y:1.4, z:0}}
+          rotation={{y:this.state.dogAngle, x:0, z:0}}
+          transition={{ rotation: { duration: 100, timing: 'linear' } }}
+        />
+        <gltf-model
+          src='assets/donutado.gltf'
+          scale={0.8}
+          position={{x:20, y:8.5, z:0}}
+          rotation={{y:this.state.donutAngle, x:0, z:0}}
+          transition={{ rotation: { duration: 100, timing: 'linear' } }}
+        />
       </scene>
     );
   }
 
   private renderComponents() {
-    let renderedComponents: Array<ISimplifiedNode> = [];
+    let renderedComponents: Array<ISimplifiedNode>=[];
 
     for(var key in this.components) {
       if(this.components.hasOwnProperty(key)) {
