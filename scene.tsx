@@ -3,6 +3,7 @@ import { ComposeableScene } from './src/composeablescene'
 import RollerCoaster from "./src/components/RollerCoaster";
 import SimonSays from "./src/components/SimonSays";
 import { Pedestal } from "./src/components/Pedestal";
+import { Pane } from "./src/components/Pane";
 
 const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b', '#6699cc'];
 
@@ -10,6 +11,7 @@ interface State {
     pedestalColor: string | number;
     dogAngle: number;
     donutAngle: number;
+    boundaryOpacity: number;
 }
 
 interface ComposeableSceneContainer {
@@ -24,7 +26,8 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     this.state = {
       pedestalColor: colors[0],
       dogAngle: 0,
-      donutAngle: 0
+      donutAngle: 0,
+      boundaryOpacity: 0
     };
     this.components = {};
 
@@ -54,6 +57,21 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
       const rotateDonuts = ( e.position.x + e.position.z) * 10
       this.setState({donutAngle: rotateDonuts})
     })
+
+    this.subscribeTo('positionChanged', e => {
+      const dx = Math.abs(e.position.x - 15);
+      const dz = Math.abs(e.position.z - 10);
+      const dx2_dy2 = Math.pow(dx, 2) + Math.pow(dz, 2);
+      const d = Math.sqrt(dx2_dy2);
+      let boundaryOpacity = 0;
+
+      if (d < 10) {
+        boundaryOpacity = 1 - d / 10;
+      }
+      console.log(dx, dz, dx2_dy2, d, boundaryOpacity);
+
+      this.setState({boundaryOpacity})
+    })
   }
 
   public async render() {
@@ -78,6 +96,11 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
           position={{x:20, y:8.5, z:0}}
           rotation={{y:this.state.donutAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
+        />
+        <Pane
+          id='pane'
+          position={{x:10, y:0.5, z:4.99}}
+          opacity={this.state.boundaryOpacity}
         />
       </scene>
     );
