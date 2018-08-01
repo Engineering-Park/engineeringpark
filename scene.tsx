@@ -68,7 +68,6 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
       if (d < 10) {
         boundaryOpacity = 1 - d / 10;
       }
-      console.log(dx, dz, dx2_dy2, d, boundaryOpacity);
 
       this.setState({boundaryOpacity})
     })
