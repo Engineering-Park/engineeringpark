@@ -4,6 +4,7 @@ import RollerCoaster from "./src/components/RollerCoaster";
 import SimonSays from "./src/components/SimonSays";
 import { Pedestal } from "./src/components/Pedestal";
 import { Pane } from "./src/components/Pane";
+import { distanceBetweenTwoPoints } from "./src/utils"
 
 const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b', '#6699cc'];
 
@@ -37,7 +38,7 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     });
 
     this.components['SimonSays'] = new SimonSays({
-      position: { x: 0, y: 0, z: 0 },
+      position: { x: -10, y: 0, z: 0 },
       rotation: { x: 0, y: 180, z: 0 }
     });
   }
@@ -59,10 +60,7 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     })
 
     this.subscribeTo('positionChanged', e => {
-      const dx = Math.abs(e.position.x - 15);
-      const dz = Math.abs(e.position.z - 10);
-      const dx2_dy2 = Math.pow(dx, 2) + Math.pow(dz, 2);
-      const d = Math.sqrt(dx2_dy2);
+      const d = Math.abs(e.position.z - 10);
       let boundaryOpacity = 0;
 
       if (d < 10) {
@@ -97,7 +95,12 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
         <Pane
-          id='pane'
+          id='pane1'
+          position={{x:0, y:0.5, z:4.99}}
+          opacity={this.state.boundaryOpacity}
+        />
+        <Pane
+          id='pane2'
           position={{x:10, y:0.5, z:4.99}}
           opacity={this.state.boundaryOpacity}
         />
