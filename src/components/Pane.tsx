@@ -11,7 +11,7 @@ export const Pane = (props: Props) => {
     <entity position={props.position}>
       <material
         id="pane_material"
-        albedoTexture="assets/Inky_smoke.jpg"
+        albedoTexture="assets/Inky_Smoke.png"
         hasAlpha
         alpha={props.opacity}
       />
