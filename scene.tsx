@@ -3,8 +3,6 @@ import { ComposeableScene } from './src/composeablescene'
 import RollerCoaster from "./src/components/RollerCoaster";
 import SimonSays from "./src/components/SimonSays";
 import { Pedestal } from "./src/components/Pedestal";
-import { Pane } from "./src/components/Pane";
-import { distanceBetweenTwoPoints } from "./src/utils"
 
 const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b', '#6699cc'];
 
@@ -93,15 +91,29 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
           rotation={{y:this.state.donutAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
-        <Pane
+        <material
+          id="pane_material1"
+          albedoTexture="assets/Inky_Smoke.png"
+          hasAlpha
+          alpha={this.state.boundaryOpacity}
+        />
+        <plane
           id='pane1'
           position={{x:0, y:0.5, z:4.99}}
-          opacity={this.state.boundaryOpacity}
+          scale={{ x: 10, y: 1, z: 1 }}
+          material="#pane_material1"
         />
-        <Pane
+        <material
+          id="pane_material2"
+          albedoTexture="assets/Ink_Drop.png"
+          hasAlpha
+          alpha={this.state.boundaryOpacity}
+        />
+        <plane
           id='pane2'
           position={{x:10, y:0.5, z:4.99}}
-          opacity={this.state.boundaryOpacity}
+          scale={{ x: 10, y: 20, z: 1 }}
+          material="#pane_material2"
         />
       </scene>
     );
