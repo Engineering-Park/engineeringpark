@@ -2,6 +2,10 @@
 ###################
 *.js
 
+# Test Output #
+###################
+coverage
+
 # Project folders #
 ###################
 build

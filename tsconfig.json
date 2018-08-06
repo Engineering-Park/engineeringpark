@@ -25,5 +25,10 @@
     "pretty": true,
     "lib": ["es2017", "dom"]
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "coverage",
+    "node_modules",
+    "jest",
+    "**/__tests__"
+  ]
 }
