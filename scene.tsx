@@ -10,7 +10,6 @@ interface State {
     pedestalColor: string | number;
     dogAngle: number;
     donutAngle: number;
-    boundaryOpacity: number;
 }
 
 interface ComposeableSceneContainer {
@@ -25,8 +24,7 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     this.state = {
       pedestalColor: colors[0],
       dogAngle: 0,
-      donutAngle: 0,
-      boundaryOpacity: 0
+      donutAngle: 0
     };
     this.components = {};
 
@@ -55,16 +53,6 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
     this.subscribeTo('positionChanged', e => {
       const rotateDonuts = ( e.position.x + e.position.z) * 10
       this.setState({donutAngle: rotateDonuts})
-    })
-
-    this.subscribeTo('positionChanged', e => {
-      const d = Math.abs(e.position.z - 10);
-      let boundaryOpacity = 0;
-
-      if (d < 10) {
-        boundaryOpacity = 1 - d / 10;
-        this.setState({boundaryOpacity})
-      }
     })
   }
 
@@ -95,24 +83,22 @@ export default class OSEVRScene extends ScriptableScene<any, State> {
           id="pane_material1"
           albedoTexture="assets/Inky_Smoke.png"
           hasAlpha
-          alpha={this.state.boundaryOpacity}
         />
         <plane
           id='pane1'
-          position={{x:0, y:0.5, z:4.99}}
-          scale={{ x: 10, y: 1, z: 1 }}
+          position={{x:0, y:2, z:4.99}}
+          scale={{ x:4, y:4, z:1 }}
           material="#pane_material1"
         />
         <material
           id="pane_material2"
           albedoTexture="assets/Ink_Drop.png"
           hasAlpha
-          alpha={this.state.boundaryOpacity}
         />
         <plane
           id='pane2'
-          position={{x:10, y:0.5, z:4.99}}
-          scale={{ x: 10, y: 20, z: 1 }}
+          position={{x:10, y:2, z:4.99}}
+          scale={{ x:2, y:4, z:1 }}
           material="#pane_material2"
         />
       </scene>
