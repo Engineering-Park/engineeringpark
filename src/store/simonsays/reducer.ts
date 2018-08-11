@@ -1,12 +1,8 @@
 import { Reducer } from 'redux';
 import { ADD_MOVE, GameActions, GameState, Move, Panel } from './types';
 
-const DIFFICULTY = 1;
-const initialSequence = randomSequence(DIFFICULTY);
-
 const initialState: GameState = {
-  difficulty: DIFFICULTY,
-  sequence: initialSequence,
+  sequence: [randomPanel()],
   inputLocked: false
 };
 
@@ -30,7 +26,6 @@ const addMove = (state: GameState, move: Move): GameState => {
     console.log("You win! Keep going!");
     return {
       ...state,
-      difficulty: state.difficulty + 1,
       sequence: move.concat(randomPanel())
     };
   }
@@ -41,19 +36,6 @@ const addMove = (state: GameState, move: Move): GameState => {
     inputLocked: true
   };
 };
-
-function randomSequence(difficulty: number): Panel[] {
-  const pool = Object.keys(Panel);
-  let arr: Panel[] = [];
-  for (let i = 0; i < difficulty; i++) {
-    const index = Math.floor(Math.random() * pool.length);
-    const key = pool[index] as keyof typeof Panel;
-    const panel = Panel[key] as Panel;
-    arr.push(panel);
-  }
-
-  return arr;
-}
 
 function randomPanel(): Panel {
   const pool = Object.keys(Panel);

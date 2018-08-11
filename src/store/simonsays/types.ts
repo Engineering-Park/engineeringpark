@@ -14,7 +14,6 @@ export type GameActions = AddMoveAction;
 
 // Define the state interfaces
 export interface GameState {
-  difficulty: number;
   sequence: Panel[];
   inputLocked: boolean;
 }

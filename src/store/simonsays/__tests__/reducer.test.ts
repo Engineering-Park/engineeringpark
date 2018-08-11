@@ -1,11 +1,10 @@
 import reducer from '../reducer'
-import { Move, Panel } from '../types'
+import { Panel } from '../types'
 ​
-describe('game reducer', () => {
+describe('simonsays reducer', () => {
   it('should return the initial state', () => {
     const answer = reducer(undefined, {type: '', payload: []});
     expect(answer).toEqual({
-      difficulty: 1,
       sequence: answer.sequence,
       inputLocked: false
     });
@@ -16,17 +15,13 @@ describe('game reducer', () => {
     const initialState = reducer(undefined, {type: '', payload: []});
 
     // make the correct move
-    const move = initialState.sequence;
-
     const action = {
       type: 'ADD_MOVE',
-      payload: move
+      payload: initialState.sequence
     }
-
     const answer = reducer(initialState, action);
 
     const expectedState = {
-      difficulty: 2,
       sequence: [...initialState.sequence, answer.sequence[1]],
       inputLocked: false
     }
@@ -43,49 +38,25 @@ describe('game reducer', () => {
     if (initialState.sequence[0] === Panel.GREEN) {
       move = Panel.YELLOW;
     }
-
-    const action = {
+    const action1 = {
       type: 'ADD_MOVE',
       payload: move
     }
-
-    const answer = reducer(initialState, action);
-
-    const expectedState = {
-      difficulty: 1,
-      sequence: initialState.sequence,
-      inputLocked: true
-    }
-
-    expect(answer).toEqual(expectedState);
-  });
-
-  it('should not make a move when the input is locked', () => {
-    // generate the initial state
-    const initialState = reducer(undefined, {type: '', payload: []});
-
-    // make the wrong move
-    let move = Panel.GREEN;
-    if (initialState.sequence[0] === Panel.GREEN) {
-      move = Panel.YELLOW;
-    }
-
-    const action = {
-      type: 'ADD_MOVE',
-      payload: move
-    }
-
-    const answer1 = reducer(initialState, action);
+    const answer1 = reducer(initialState, action1);
 
     const expectedState = {
-      difficulty: 1,
       sequence: initialState.sequence,
       inputLocked: true
     }
 
     expect(answer1).toEqual(expectedState);
 
-    const answer2 = reducer(initialState, action);
+    // attempt to make the correct move
+    const action2 = {
+      type: 'ADD_MOVE',
+      payload: initialState.sequence
+    }
+    const answer2 = reducer(answer1, action2);
     expect(answer2).toEqual(expectedState);
   });
 });
