@@ -31,7 +31,7 @@ const addMove = (state: GameState, move: Move): GameState => {
     return {
       ...state,
       difficulty: state.difficulty + 1,
-      sequence: move
+      sequence: move.concat(randomPanel())
     };
   }
 
@@ -53,4 +53,12 @@ function randomSequence(difficulty: number): Panel[] {
   }
 
   return arr;
+}
+
+function randomPanel(): Panel {
+  const pool = Object.keys(Panel);
+  const index = Math.floor(Math.random() * pool.length);
+  const key = pool[index] as keyof typeof Panel;
+  const panel = Panel[key] as Panel;
+  return panel;
 }

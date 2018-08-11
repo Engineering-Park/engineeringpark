@@ -6,7 +6,7 @@
     "build": "metaverse-compiler build.json",
     "coverage": "npm test -- --coverage",
     "watch": "metaverse-compiler build.json --watch",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "author": "Tristan Martindale",
   "license": "MIT",
