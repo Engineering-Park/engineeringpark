@@ -8,10 +8,12 @@ import { setColour, setDogAngle, setDonutAngle } from "./src/store/game/actions"
 const store = createStore(rootReducer);
 
 export default class OSEVRScene extends ScriptableScene {
+  private unsubscribe: () => void
+
   constructor(props: any) {
     super(props);
 
-    store.subscribe(() => {
+    this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
     });
   }
@@ -79,5 +81,9 @@ export default class OSEVRScene extends ScriptableScene {
         />
       </scene>
     );
+  }
+
+  public async sceneWillUnmount() {
+    this.unsubscribe();
   }
 }
