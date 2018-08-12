@@ -1,8 +1,8 @@
 import { combineReducers, Reducer } from 'redux';
 
 // Import state types and reducers here
-import { GameState } from './simonsays/types';
-import gameReducer from './simonsays/reducer';
+import { GameState } from './game/types';
+import gameReducer from './game/reducer';
 
 // The top-level state object
 export interface ApplicationState {

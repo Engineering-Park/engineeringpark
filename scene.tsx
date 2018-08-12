@@ -2,64 +2,57 @@ import { createElement, ScriptableScene } from 'metaverse-api'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
+import { colours } from './src/store/game/types'
+import { setColour, setDogAngle, setDonutAngle } from "./src/store/game/actions";
 
 const store = createStore(rootReducer);
 
-const colors = ['#3d9693', '#e8daa0', '#968fb7', '#966161', '#879e91', '#66656b', '#6699cc'];
-
-interface State {
-    pedestalColor: string | number;
-    dogAngle: number;
-    donutAngle: number;
-}
-
-export default class OSEVRScene extends ScriptableScene<any, State> {
+export default class OSEVRScene extends ScriptableScene {
   constructor(props: any) {
     super(props);
-    this.state = {
-      pedestalColor: colors[0],
-      dogAngle: 0,
-      donutAngle: 0
-    };
+
+    store.subscribe(() => {
+      this.forceUpdate();
+    });
   }
 
   public async sceneDidMount() {
     this.eventSubscriber.on(`pedestal_click`, () => {
-      let col = Math.floor(Math.random() * colors.length);
-      this.setState({pedestalColor: colors[col]});
-      console.log(colors[col]);
+      let col = Math.floor(Math.random() * colours.length);
+      store.dispatch(setColour(colours[col]));
     });
 
     setInterval(() => {
-      this.setState({ dogAngle: this.state.dogAngle + 2})
+      store.dispatch(setDogAngle(store.getState().game.dogAngle + 2));
     }, 100)
 
     this.subscribeTo('positionChanged', e => {
       const rotateDonuts = ( e.position.x + e.position.z) * 10
-      this.setState({donutAngle: rotateDonuts})
+      store.dispatch(setDonutAngle(rotateDonuts));
     })
   }
 
   public async render() {
+    const state = store.getState().game;
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <Pedestal
           id='pedestal'
           position={{x:20, y:0.5, z:0}}
-          color={this.state.pedestalColor}
+          color={state.pedestalColor}
         />
         <gltf-model
           src='assets/angry-dog.gltf'
           scale={0.3}
           position={{x:20, y:1.4, z:0}}
-          rotation={{y:this.state.dogAngle, x:0, z:0}}
+          rotation={{y:state.dogAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
         <gltf-model
           src='assets/donutado.gltf'
           scale={0.8}
           position={{x:20, y:8.5, z:0}}
-          rotation={{y:this.state.donutAngle, x:0, z:0}}
+          rotation={{y:state.donutAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
         <material
