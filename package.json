@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Open Systems Engineering VR",
   "scripts": {
+    "start": "dcl preview --no-browser",
     "build": "metaverse-compiler build.json",
     "coverage": "npm test -- --coverage",
     "watch": "metaverse-compiler build.json --watch",
