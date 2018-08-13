@@ -1,7 +1,7 @@
 {
-  "name": "osevr",
+  "name": "engineeringpark",
   "version": "0.0.0",
-  "description": "Open Systems Engineering VR",
+  "description": "Decentraland Engineering Park",
   "scripts": {
     "start": "dcl preview --no-browser",
     "build": "metaverse-compiler build.json",
@@ -10,7 +10,7 @@
     "test": "jest --watch"
   },
   "author": "Tristan Martindale",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@types/jest": "^23.3.1",
     "ajv": "^6.5.2",
