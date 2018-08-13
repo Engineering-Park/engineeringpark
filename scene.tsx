@@ -1,4 +1,5 @@
 import { createElement, ScriptableScene } from 'metaverse-api'
+import { Boundary } from './src/components/Boundary'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
@@ -38,6 +39,7 @@ export default class OSEVRScene extends ScriptableScene {
     const state = store.getState().game;
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
+        <Boundary />
         <Pedestal
           id='pedestal'
           position={{x:20, y:0.5, z:0}}
@@ -56,28 +58,6 @@ export default class OSEVRScene extends ScriptableScene {
           position={{x:20, y:8.5, z:0}}
           rotation={{y:state.donutAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
-        />
-        <material
-          id="pane_material1"
-          albedoTexture="assets/Inky_Smoke.png"
-          hasAlpha
-        />
-        <plane
-          id='pane1'
-          position={{x:0, y:2, z:4.99}}
-          scale={{ x:4, y:4, z:1 }}
-          material="#pane_material1"
-        />
-        <material
-          id="pane_material2"
-          albedoTexture="assets/Ink_Drop.png"
-          hasAlpha
-        />
-        <plane
-          id='pane2'
-          position={{x:10, y:2, z:4.99}}
-          scale={{ x:2, y:4, z:1 }}
-          material="#pane_material2"
         />
       </scene>
     );
