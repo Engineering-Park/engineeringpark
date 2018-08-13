@@ -1,6 +1,8 @@
 import { Reducer } from 'redux';
 import { colours, SET_COLOUR, TICK, SET_DONUT_ANGLE, SceneActions, SceneState } from './types';
 
+const dogAngularRate = 20; // degrees per second
+
 const initialState: SceneState = {
   pedestalColor: colours[0],
   dogAngle: 0,
@@ -15,7 +17,7 @@ export const reducer: Reducer<SceneState> = (state: SceneState = initialState, a
       };
     case TICK:
       return {...state,
-        dogAngle: state.dogAngle + action.payload,
+        dogAngle: state.dogAngle + dogAngularRate * action.payload,
       };
     case SET_DONUT_ANGLE:
       return {...state,

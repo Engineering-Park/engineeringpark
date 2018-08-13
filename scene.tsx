@@ -8,6 +8,8 @@ import { setColour, tick, setDonutAngle } from "./src/store/scene/actions";
 
 const store = createStore(rootReducer);
 
+const dt = 0.1; // seconds
+
 export default class OSEVRScene extends ScriptableScene {
   private unsubscribe: () => void
 
@@ -26,8 +28,8 @@ export default class OSEVRScene extends ScriptableScene {
     });
 
     setInterval(() => {
-      store.dispatch(tick(2));
-    }, 100)
+      store.dispatch(tick(dt));
+    }, dt*1000)
 
     this.subscribeTo('positionChanged', e => {
       const rotateDonuts = ( e.position.x + e.position.z) * 10
