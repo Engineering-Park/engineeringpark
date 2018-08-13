@@ -8,22 +8,28 @@ export const Boundary = () => {
         albedoTexture="assets/Inky_Smoke.png"
         hasAlpha
       />
-      <plane
-        id='pane1'
-        position={{x:0, y:2, z:4.99}}
-        scale={{ x:4, y:4, z:1 }}
-        material="#pane_material1"
-      />
       <material
         id="pane_material2"
         albedoTexture="assets/Ink_Drop.png"
         hasAlpha
       />
       <plane
+        id='pane1'
+        position={{x:-3, y:2, z:4.99}}
+        scale={{ x:4, y:4, z:1 }}
+        material="#pane_material1"
+      />
+      <plane
         id='pane2'
-        position={{x:10, y:2, z:4.99}}
+        position={{x:0, y:2, z:4.99}}
         scale={{ x:2, y:4, z:1 }}
         material="#pane_material2"
+      />
+      <plane
+        id='pane3'
+        position={{x:3, y:2, z:4.99}}
+        scale={{ x:4, y:4, z:1 }}
+        material="#pane_material1"
       />
     </entity>
   );

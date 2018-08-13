@@ -1,5 +1,6 @@
 import { createElement, ScriptableScene } from 'metaverse-api'
 import { Boundary } from './src/components/Boundary'
+import { Ground } from './src/components/Ground'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
@@ -41,6 +42,7 @@ export default class OSEVRScene extends ScriptableScene {
     const state = store.getState().scene;
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
+        <Ground />
         <Boundary />
         <Pedestal
           id='pedestal'
