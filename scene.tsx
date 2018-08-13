@@ -1,15 +1,16 @@
 import { createElement, ScriptableScene } from 'metaverse-api'
 import { Boundary } from './src/components/Boundary'
 import { Ground } from './src/components/Ground'
+import { HummingBird } from './src/components/HummingBird'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
-import { colours } from './src/store/scene/types'
+import { colours, SceneState } from './src/store/scene/types'
 import { setColour, tick, setDonutAngle } from "./src/store/scene/actions";
 
 const store = createStore(rootReducer);
 
-const dt = 0.1; // seconds
+const dt = 4; // seconds
 
 export default class OSEVRScene extends ScriptableScene {
   private unsubscribe: () => void
@@ -49,6 +50,7 @@ export default class OSEVRScene extends ScriptableScene {
           position={{x:20, y:0.5, z:0}}
           color={state.pedestalColor}
         />
+        {this.renderBirds(state)}
         <gltf-model
           src='assets/angry-dog.gltf'
           scale={0.3}
@@ -76,4 +78,10 @@ export default class OSEVRScene extends ScriptableScene {
   public async sceneWillUnmount() {
     this.unsubscribe();
   }
+
+  public renderBirds(state: SceneState) {
+    return state.birdPositions.map( (pos, birdNum) => (
+      <HummingBird key={birdNum.toString()} position={state.birdPositions[birdNum]} action={state.birdActions[birdNum]} />
+    )
+  )}
 }
