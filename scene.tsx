@@ -63,6 +63,12 @@ export default class OSEVRScene extends ScriptableScene {
           rotation={{y:state.donutAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
+        <gltf-model
+          src='assets/steam_train.gltf'
+          scale={2}
+          position={{x:-10, y:-2.5, z:0}}
+          rotation={{y:0, x:0, z:0}}
+        />
       </scene>
     );
   }
