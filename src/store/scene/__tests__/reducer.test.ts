@@ -1,7 +1,7 @@
 import reducer from '../reducer'
 import { colours } from '../types';
 ​
-describe('game reducer', () => {
+describe('scene reducer', () => {
   it('should return the initial state', () => {
     const answer = reducer(undefined, {payload: null, type: ''});
     expect(answer).toEqual({
@@ -20,11 +20,17 @@ describe('game reducer', () => {
     });
   });
 
-  it('should handle SET_DOG_ANGLE', () => {
-    const answer = reducer(undefined, {payload: 25, type: 'SET_DOG_ANGLE'});
-    expect(answer).toEqual({
+  it('should handle TICK', () => {
+    const answer1 = reducer(undefined, {payload: 25, type: 'TICK'});
+    expect(answer1).toEqual({
       pedestalColor: colours[0],
       dogAngle: 25,
+      donutAngle: 0
+    });
+    const answer2 = reducer(answer1, {payload: 25, type: 'TICK'});
+    expect(answer2).toEqual({
+      pedestalColor: colours[0],
+      dogAngle: 50,
       donutAngle: 0
     });
   });

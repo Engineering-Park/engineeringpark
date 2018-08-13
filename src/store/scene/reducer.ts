@@ -1,21 +1,21 @@
 import { Reducer } from 'redux';
-import { colours, SET_COLOUR, SET_DOG_ANGLE, SET_DONUT_ANGLE, GameActions, GameState } from './types';
+import { colours, SET_COLOUR, TICK, SET_DONUT_ANGLE, SceneActions, SceneState } from './types';
 
-const initialState: GameState = {
+const initialState: SceneState = {
   pedestalColor: colours[0],
   dogAngle: 0,
   donutAngle: 0
 };
 
-export const reducer: Reducer<GameState> = (state: GameState = initialState, action) => {
-  switch ((action as GameActions).type) {
+export const reducer: Reducer<SceneState> = (state: SceneState = initialState, action) => {
+  switch ((action as SceneActions).type) {
     case SET_COLOUR:
       return {...state,
         pedestalColor: action.payload,
       };
-    case SET_DOG_ANGLE:
+    case TICK:
       return {...state,
-        dogAngle: action.payload,
+        dogAngle: state.dogAngle + action.payload,
       };
     case SET_DONUT_ANGLE:
       return {...state,

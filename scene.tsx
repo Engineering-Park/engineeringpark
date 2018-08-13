@@ -3,8 +3,8 @@ import { Boundary } from './src/components/Boundary'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
-import { colours } from './src/store/game/types'
-import { setColour, setDogAngle, setDonutAngle } from "./src/store/game/actions";
+import { colours } from './src/store/scene/types'
+import { setColour, tick, setDonutAngle } from "./src/store/scene/actions";
 
 const store = createStore(rootReducer);
 
@@ -26,7 +26,7 @@ export default class OSEVRScene extends ScriptableScene {
     });
 
     setInterval(() => {
-      store.dispatch(setDogAngle(store.getState().game.dogAngle + 2));
+      store.dispatch(tick(2));
     }, 100)
 
     this.subscribeTo('positionChanged', e => {
@@ -36,7 +36,7 @@ export default class OSEVRScene extends ScriptableScene {
   }
 
   public async render() {
-    const state = store.getState().game;
+    const state = store.getState().scene;
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <Boundary />
