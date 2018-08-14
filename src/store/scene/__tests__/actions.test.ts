@@ -1,5 +1,5 @@
 import { SceneActions } from '../types';
-import { setColour, tick, setDonutAngle } from "../actions";
+import { setColour, setDogAngle, setDonutAngle } from "../actions";
 
 describe('actions', () => {
   it('should create an action to set the colour', () => {
@@ -10,12 +10,12 @@ describe('actions', () => {
     expect(setColour('#e8daa0')).toEqual(expectedAction);
   })
 
-  it('should create an action to tick the simulation', () => {
+  it('should create an action to set the dog angle', () => {
     const expectedAction: SceneActions = {
-      payload: 20,
-      type: 'TICK'
+      payload: 2,
+      type: 'SET_DOG_ANGLE'
     }
-    expect(tick(20)).toEqual(expectedAction);
+    expect(setDogAngle(2)).toEqual(expectedAction);
   })
 
   it('should create an action to set the donut angle', () => {

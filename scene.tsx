@@ -5,12 +5,12 @@ import { HummingBird } from './src/components/HummingBird'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
-import { colours, SceneState } from './src/store/scene/types'
-import { setColour, tick, setDonutAngle } from "./src/store/scene/actions";
+import { colours } from './src/store/scene/types'
+import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
+import { tickHummingbirdsAction } from "./src/store/hummingbirds/actions";
+import { HummingbirdsState } from './src/store/hummingbirds/types'
 
 const store = createStore(rootReducer);
-
-const dt = 4; // seconds
 
 export default class OSEVRScene extends ScriptableScene {
   private unsubscribe: () => void
@@ -30,17 +30,21 @@ export default class OSEVRScene extends ScriptableScene {
     });
 
     setInterval(() => {
-      store.dispatch(tick(dt));
-    }, dt*1000)
+      store.dispatch(setDogAngle(2));
+    }, 100);
+
+    setInterval(() => {
+      store.dispatch(tickHummingbirdsAction(4));
+    }, 4000);
 
     this.subscribeTo('positionChanged', e => {
       const rotateDonuts = ( e.position.x + e.position.z) * 10
       store.dispatch(setDonutAngle(rotateDonuts));
-    })
+    });
   }
 
   public async render() {
-    const state = store.getState().scene;
+    const state = store.getState();
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <Ground />
@@ -48,21 +52,21 @@ export default class OSEVRScene extends ScriptableScene {
         <Pedestal
           id='pedestal'
           position={{x:20, y:0.5, z:0}}
-          color={state.pedestalColor}
+          color={state.scene.pedestalColor}
         />
-        {this.renderBirds(state)}
+        {this.renderBirds(state.hummingbirds)}
         <gltf-model
           src='assets/angry-dog.gltf'
           scale={0.3}
           position={{x:20, y:1.4, z:0}}
-          rotation={{y:state.dogAngle, x:0, z:0}}
+          rotation={{y:state.scene.dogAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
         <gltf-model
           src='assets/donutado.gltf'
           scale={0.8}
           position={{x:20, y:8.5, z:0}}
-          rotation={{y:state.donutAngle, x:0, z:0}}
+          rotation={{y:state.scene.donutAngle, x:0, z:0}}
           transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
         <gltf-model
@@ -79,9 +83,9 @@ export default class OSEVRScene extends ScriptableScene {
     this.unsubscribe();
   }
 
-  public renderBirds(state: SceneState) {
-    return state.birdPositions.map( (pos, birdNum) => (
-      <HummingBird key={birdNum.toString()} position={state.birdPositions[birdNum]} action={state.birdActions[birdNum]} />
+  public renderBirds(state: HummingbirdsState) {
+    return state.positions.map( (pos, birdNum) => (
+      <HummingBird key={birdNum.toString()} position={state.positions[birdNum]} action={state.actions[birdNum]} />
     )
   )}
 }

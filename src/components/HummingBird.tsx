@@ -1,10 +1,10 @@
 import { createElement, Vector3Component } from 'metaverse-api'
-import { BirdAction } from '../store/scene/types'
+import { HummingbirdAction } from '../store/hummingbirds/types'
 
 export interface Props {
   key: string;
   position: Vector3Component;
-  action: BirdAction;
+  action: HummingbirdAction;
 }
 
 export const HummingBird = (props: Props) => {

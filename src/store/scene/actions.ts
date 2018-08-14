@@ -1,15 +1,15 @@
 import { ActionCreator } from 'redux';
-import { SET_COLOUR, TICK, SET_DONUT_ANGLE,
-  SetColourAction, TickAction, SetDonutAngleAction } from './types';
+import { SET_COLOUR, SET_DOG_ANGLE, SET_DONUT_ANGLE,
+  SetColourAction, SetDogAngleAction, SetDonutAngleAction } from './types';
 
 export const setColour: ActionCreator<SetColourAction> = (colour: string) => ({
   payload: colour,
   type: SET_COLOUR
 });
 
-export const tick: ActionCreator<TickAction> = (dt: number) => ({
-  payload: dt,
-  type: TICK
+export const setDogAngle: ActionCreator<SetDogAngleAction> = (angle: number) => ({
+  payload: angle,
+  type: SET_DOG_ANGLE
 });
 
 export const setDonutAngle: ActionCreator<SetDonutAngleAction> = (angle: number) => ({

@@ -1,14 +1,10 @@
 import { Reducer } from 'redux';
-import { BirdAction, colours, SET_COLOUR, TICK, SET_DONUT_ANGLE, SceneActions, SceneState } from './types';
-
-const dogAngularRate = 20; // degrees per second
+import { colours, SET_COLOUR, SET_DOG_ANGLE, SET_DONUT_ANGLE, SceneActions, SceneState } from './types';
 
 const initialState: SceneState = {
   pedestalColor: colours[0],
   dogAngle: 0,
   donutAngle: 0,
-  birdPositions: [{x:5, y:1, z:5},{x:5, y:1, z:5},{x:5, y:1, z:5}],
-  birdActions: [null, null, null]
 };
 
 export const reducer: Reducer<SceneState> = (state: SceneState = initialState, action) => {
@@ -17,11 +13,9 @@ export const reducer: Reducer<SceneState> = (state: SceneState = initialState, a
       return {...state,
         pedestalColor: action.payload,
       };
-    case TICK:
+    case SET_DOG_ANGLE:
       return {...state,
-        dogAngle: state.dogAngle + dogAngularRate * action.payload,
-        birdPositions: [newBirdPosition(), newBirdPosition(), newBirdPosition()],
-        birdActions: [newBirdAction(), newBirdAction(), newBirdAction()]
+        dogAngle: state.dogAngle + action.payload,
       };
     case SET_DONUT_ANGLE:
       return {...state,
@@ -33,24 +27,3 @@ export const reducer: Reducer<SceneState> = (state: SceneState = initialState, a
 };
 
 export default reducer;
-
-function newBirdPosition() {
-  return {
-    x: Math.random()*10,
-    y: Math.random()*2 + 1,
-    z: Math.random()*10 - 5
-  }
-}
-
-function newBirdAction() {
-  let newAction: BirdAction = null;
-  const ranNum = Math.random()
-  if (ranNum < 0.6){
-    newAction = null
-  } else if (ranNum < 0.8) {
-    newAction =  'looking'
-  } else {
-    newAction =  'shaking'
-  }
-  return newAction;
-}

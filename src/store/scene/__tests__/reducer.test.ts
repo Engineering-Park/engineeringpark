@@ -20,17 +20,17 @@ describe('scene reducer', () => {
     });
   });
 
-  it('should handle TICK', () => {
-    const answer1 = reducer(undefined, {payload: 25, type: 'TICK'});
+  it('should handle SET_DOG_ANGLE', () => {
+    const answer1 = reducer(undefined, {payload: 2, type: 'SET_DOG_ANGLE'});
     expect(answer1).toEqual({
       pedestalColor: colours[0],
-      dogAngle: 25,
+      dogAngle: 2,
       donutAngle: 0
     });
-    const answer2 = reducer(answer1, {payload: 25, type: 'TICK'});
+    const answer2 = reducer(answer1, {payload: 3, type: 'SET_DOG_ANGLE'});
     expect(answer2).toEqual({
       pedestalColor: colours[0],
-      dogAngle: 50,
+      dogAngle: 5,
       donutAngle: 0
     });
   });
