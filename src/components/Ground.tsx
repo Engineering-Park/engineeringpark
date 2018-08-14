@@ -3,6 +3,14 @@ import { createElement, Vector3Component } from 'metaverse-api'
 export const Ground = () => {
   return (
     <entity id='ground'>
+      <material
+        id='stars_material'
+        albedoTexture='assets/stars.png'
+      />
+      <material
+        id='water_material'
+        albedoTexture='assets/water.png'
+      />
       {createGroundSection({x:0, y:0, z:0}, 'stars')}
       {createGroundSection({x:10, y:0, z:0}, 'water')}
     </entity>
@@ -12,10 +20,6 @@ export const Ground = () => {
 function createGroundSection(position: Vector3Component, material: string) {
   return (
     <entity position={position}>
-      <material
-        id={material+'_material'}
-        albedoTexture={'assets/'+material+'.png'}
-      />
       <plane
         id={'pane_'+material}
         position={{x:0, y:0, z:0}}
