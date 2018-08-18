@@ -7,15 +7,24 @@ import { createStore } from 'redux'
 import { rootReducer } from './src/store'
 import { colours } from './src/store/scene/types'
 import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
-import { moveHummingbirdAction } from "./src/store/hummingbirds/actions";
+import { createHummingbirdAction, moveHummingbirdAction } from "./src/store/hummingbirds/actions";
 
 const store = createStore(rootReducer);
 
+export interface State {
+  treeShake: boolean
+ }
+
 export default class OSEVRScene extends ScriptableScene {
+  public state: State;
   private unsubscribe: () => void
 
   constructor(props: any) {
     super(props);
+
+    this.state = {
+      treeShake: false
+    }
 
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
@@ -32,22 +41,20 @@ export default class OSEVRScene extends ScriptableScene {
       store.dispatch(setDogAngle(2));
     }, 100);
 
-    setInterval(() => {
-      store.dispatch(moveHummingbirdAction(0));
-    }, 4000);
-
-    setInterval(() => {
-      store.dispatch(moveHummingbirdAction(1));
-    }, 4000);
-
-    setInterval(() => {
-      store.dispatch(moveHummingbirdAction(2));
-    }, 4000);
-
     this.subscribeTo('positionChanged', e => {
       const rotateDonuts = ( e.position.x + e.position.z) * 10
       store.dispatch(setDonutAngle(rotateDonuts));
     });
+
+    this.eventSubscriber.on('tree_click', () => {
+      const bird = store.getState().hummingbirds.positions.length;
+      if (bird > 10) {return;}
+      this.shakeTree();
+      store.dispatch(createHummingbirdAction(bird));
+      setInterval(() => {
+        store.dispatch(moveHummingbirdAction(bird));
+      }, 3000 + Math.random() * 2000)
+    })
   }
 
   public async render() {
@@ -82,11 +89,31 @@ export default class OSEVRScene extends ScriptableScene {
           position={{x:-10, y:-2.5, z:0}}
           rotation={{y:0, x:0, z:0}}
         />
+        <gltf-model
+          src="assets/Tree.gltf"
+          id="tree"
+          scale={1.1}
+          position={{ x: 0, y: 0, z: 0 }}
+          skeletalAnimation={[
+            {
+              clip: "Tree_Action",
+              loop: true,
+              playing: this.state.treeShake ? true : false
+            }
+          ]}
+        />
       </scene>
     );
   }
 
   public async sceneWillUnmount() {
     this.unsubscribe();
+  }
+
+  private async shakeTree() {
+    this.setState({treeShake: true});
+    setTimeout( () => {
+      this.setState({treeShake: false})
+    }, 2000);
   }
 }

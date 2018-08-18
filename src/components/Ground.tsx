@@ -11,7 +11,8 @@ export const Ground = () => {
         id='water_material'
         albedoTexture='assets/water.png'
       />
-      {createGroundSection({x:0, y:0, z:0}, 'stars')}
+      <gltf-model src="assets/Ground.gltf" position={{ x: 0, y: 0, z: 0 }} />
+      {createGroundSection({x:-10, y:0, z:0}, 'stars')}
       {createGroundSection({x:10, y:0, z:0}, 'water')}
     </entity>
   );

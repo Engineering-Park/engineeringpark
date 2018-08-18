@@ -3,15 +3,15 @@ import { CREATE_HUMMINGBIRD, HummingbirdAction, HummingbirdActions, Hummingbirds
 import { Vector3Component } from 'metaverse-api'
 
 const initialState: HummingbirdsState = {
-  positions: [{x:5, y:1, z:5},{x:5, y:1, z:5},{x:5, y:1, z:5}],
-  actions: [null, null, null]
+  positions: [],
+  actions: []
 };
 
 export const reducer: Reducer<HummingbirdsState> = (state: HummingbirdsState = initialState, action) => {
   switch ((action as HummingbirdActions).type) {
     case CREATE_HUMMINGBIRD:
       return {...state,
-        positions: [...state.positions, {x: 4, y: 2, z: 8}],
+        positions: [...state.positions, {x: 0, y: 2, z: 0}],
         actions: [...state.actions, null]
       };
     case MOVE_HUMMINGBIRD:
