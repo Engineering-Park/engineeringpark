@@ -1,12 +1,20 @@
 import { HummingbirdActions } from '../types';
-import { tickHummingbirdsAction } from "../actions";
+import { createHummingbirdAction, moveHummingbirdAction } from "../actions";
 
 describe('actions', () => {
-  it('should create an action to tick the simulation', () => {
+  it('should create an action to create a hummingbird', () => {
     const expectedAction: HummingbirdActions = {
-      payload: 20,
-      type: 'TICK_HUMMINGBIRDS'
+      payload: 0,
+      type: 'CREATE_HUMMINGBIRD'
     }
-    expect(tickHummingbirdsAction(20)).toEqual(expectedAction);
+    expect(createHummingbirdAction(0)).toEqual(expectedAction);
+  })
+
+  it('should create an action to move a hummingbird', () => {
+    const expectedAction: HummingbirdActions = {
+      payload: 0,
+      type: 'MOVE_HUMMINGBIRD'
+    }
+    expect(moveHummingbirdAction(0)).toEqual(expectedAction);
   })
 })

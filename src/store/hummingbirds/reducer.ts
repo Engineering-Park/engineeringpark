@@ -1,5 +1,6 @@
 import { Reducer } from 'redux';
-import { HummingbirdAction, HummingbirdActions, HummingbirdsState, TICK_HUMMINGBIRDS } from './types';
+import { CREATE_HUMMINGBIRD, HummingbirdAction, HummingbirdActions, HummingbirdsState, MOVE_HUMMINGBIRD } from './types';
+import { Vector3Component } from 'metaverse-api'
 
 const initialState: HummingbirdsState = {
   positions: [{x:5, y:1, z:5},{x:5, y:1, z:5},{x:5, y:1, z:5}],
@@ -8,10 +9,15 @@ const initialState: HummingbirdsState = {
 
 export const reducer: Reducer<HummingbirdsState> = (state: HummingbirdsState = initialState, action) => {
   switch ((action as HummingbirdActions).type) {
-    case TICK_HUMMINGBIRDS:
+    case CREATE_HUMMINGBIRD:
       return {...state,
-        positions: [newBirdPosition(), newBirdPosition(), newBirdPosition()],
-        actions: [newBirdAction(), newBirdAction(), newBirdAction()]
+        positions: [...state.positions, {x: 4, y: 2, z: 8}],
+        actions: [...state.actions, null]
+      };
+    case MOVE_HUMMINGBIRD:
+      return {...state,
+        positions: newBirdPositions(state.positions, action.payload),
+        actions: newBirdActions(state.actions, action.payload)
       };
     default:
       return state;
@@ -20,23 +26,25 @@ export const reducer: Reducer<HummingbirdsState> = (state: HummingbirdsState = i
 
 export default reducer;
 
-function newBirdPosition() {
-  return {
-    x: Math.random()*10,
-    y: Math.random()*2 + 1,
-    z: Math.random()*10 - 5
+function newBirdPositions(positions: Vector3Component[], bird: number) {
+  let newPositions = positions.slice();
+  newPositions[bird] = {
+    x: (Math.random() *10 ),
+    y:  Math.random() *2 + 1,
+    z: (Math.random() *10 - 5)
   }
+  return newPositions;
 }
 
-function newBirdAction() {
-  let newAction: HummingbirdAction = null;
+function newBirdActions(actions: HummingbirdAction[], bird: number) {
+  let newActions = actions.slice();
   const ranNum = Math.random()
   if (ranNum < 0.6){
-    newAction = null
+    newActions[bird] = null
   } else if (ranNum < 0.8) {
-    newAction =  'looking'
+    newActions[bird] = 'looking'
   } else {
-    newAction =  'shaking'
+    newActions[bird] = 'shaking'
   }
-  return newAction;
+  return newActions;
 }

@@ -1,7 +1,12 @@
 import { ActionCreator } from 'redux';
-import { TICK_HUMMINGBIRDS, TickHummingbirdsAction } from './types';
+import { CREATE_HUMMINGBIRD, CreateHummingbirdAction, MOVE_HUMMINGBIRD, MoveHummingbirdAction } from './types';
 
-export const tickHummingbirdsAction: ActionCreator<TickHummingbirdsAction> = (dt: number) => ({
-  payload: dt,
-  type: TICK_HUMMINGBIRDS
+export const moveHummingbirdAction: ActionCreator<MoveHummingbirdAction> = (bird: number) => ({
+  payload: bird,
+  type: MOVE_HUMMINGBIRD
+});
+
+export const createHummingbirdAction: ActionCreator<CreateHummingbirdAction> = (id: number) => ({
+  payload: id,
+  type: CREATE_HUMMINGBIRD
 });
