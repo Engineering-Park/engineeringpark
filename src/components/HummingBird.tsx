@@ -1,4 +1,4 @@
-import { createElement, Vector3Component } from 'metaverse-api'
+import { createElement, ISimplifiedNode, Vector3Component } from 'metaverse-api'
 import { HummingbirdAction, HummingbirdsState } from '../store/hummingbirds/types'
 
 export interface Props {
@@ -29,7 +29,11 @@ export const HummingBird = (props: Props) => {
 }
 
 export function renderHummingBirds(state: HummingbirdsState) {
-  return state.positions.map( (pos, birdNum) => (
-    <HummingBird key={birdNum.toString()} position={state.positions[birdNum]} action={state.actions[birdNum]} />
-  )
-)}
+  let birds: ISimplifiedNode[] = [];
+  for (const i in state.positions) {
+    birds.push(
+      <HummingBird key={i.toString()} position={state.positions[i]} action={state.actions[i]} />
+    );
+  }
+  return birds;
+}
