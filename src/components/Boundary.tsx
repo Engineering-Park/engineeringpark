@@ -1,4 +1,5 @@
-import { createElement, Vector3Component } from 'metaverse-api'
+import { createElement, ISimplifiedNode, Vector3Component } from 'metaverse-api'
+import { parcelDisplacement, Parcel } from '../utils';
 
 export const Boundary = () => {
   return (
@@ -13,10 +14,24 @@ export const Boundary = () => {
         albedoTexture="assets/Ink_Drop.png"
         hasAlpha
       />
-      {createWallSection({x:0, y:0, z:0})}
-      {createWallSection({x:10, y:0, z:0})}
+      {createWall()}
     </entity>
   );
+}
+
+function createWall() {
+  let wall: ISimplifiedNode[] = [];
+
+  const baseParcel: Parcel = {x: 69, z:49};
+  const eastCorner: Parcel = {x: 65, z:49};
+  const westCorner: Parcel = {x: 72, z:49};
+
+  const numWallSections = westCorner.x - eastCorner.x;
+  for (let i = 0; i <= numWallSections; i++) {
+    const d = parcelDisplacement(baseParcel, {x: eastCorner.x + i, z: eastCorner.z});
+    wall.push(createWallSection({x: d.x, y: 0, z: d.z}));
+  }
+  return wall;
 }
 
 function createWallSection(position: Vector3Component) {
@@ -24,7 +39,7 @@ function createWallSection(position: Vector3Component) {
     <entity position={position}>
       <plane
         id='pane1'
-        position={{x:-3, y:2, z:4.99}}
+        position={{x:-2.99, y:2, z:4.99}}
         scale={{ x:4, y:4, z:1 }}
         material="#pane_material1"
       />
@@ -36,7 +51,7 @@ function createWallSection(position: Vector3Component) {
       />
       <plane
         id='pane3'
-        position={{x:3, y:2, z:4.99}}
+        position={{x:2.99, y:2, z:4.99}}
         scale={{ x:4, y:4, z:1 }}
         material="#pane_material1"
       />
