@@ -1,38 +1,119 @@
 import { createElement, ScriptableScene } from 'metaverse-api'
-import { ComposeableScene } from './src/composeablescene'
-import RollerCoaster from "./src/components/RollerCoaster";
-import SimonSays from "./src/components/SimonSays";
+import { Boundary } from './src/components/Boundary'
+import { Ground } from './src/components/Ground'
+import { renderHummingBirds } from './src/components/HummingBird'
+import { Pedestal } from "./src/components/Pedestal";
+import { createStore } from 'redux'
+import { rootReducer } from './src/store'
+import { colours } from './src/store/scene/types'
+import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
+import { createHummingbirdAction, moveHummingbirdAction } from "./src/store/hummingbirds/actions";
+
+const store = createStore(rootReducer);
+
+export interface State {
+  treeShake: boolean
+ }
 
 export default class OSEVRScene extends ScriptableScene {
-  components: Array<ComposeableScene<any, any>>;
+  public state: State;
+  private unsubscribe: () => void
 
   constructor(props: any) {
     super(props);
-    this.components = [];
 
-    let rcProps = {
-      position: { x: -5, y: 4, z: 5 },
-      rotation: { x: 0, y: 0, z: 0 }
+    this.state = {
+      treeShake: false
     }
 
-    let ssProps = {
-      position: { x: 5, y: 0, z: 5 },
-      rotation: { x: 0, y: 0, z: 0 }
-    }
+    this.unsubscribe = store.subscribe(() => {
+      this.forceUpdate();
+    });
+  }
 
-    this.components.push(new RollerCoaster(rcProps));
-    this.components.push(new SimonSays(ssProps));
+  public async sceneDidMount() {
+    this.eventSubscriber.on(`pedestal_click`, () => {
+      let col = Math.floor(Math.random() * colours.length);
+      store.dispatch(setColour(colours[col]));
+    });
+
+    setInterval(() => {
+      store.dispatch(setDogAngle(2));
+    }, 100);
+
+    this.subscribeTo('positionChanged', e => {
+      const rotateDonuts = ( e.position.x + e.position.z) * 10
+      store.dispatch(setDonutAngle(rotateDonuts));
+    });
+
+    this.eventSubscriber.on('tree_click', () => {
+      const bird = store.getState().hummingbirds.positions.length;
+      if (bird > 10) {return;}
+      this.shakeTree();
+      store.dispatch(createHummingbirdAction(bird));
+      setInterval(() => {
+        store.dispatch(moveHummingbirdAction(bird));
+      }, 3000 + Math.random() * 2000)
+    })
   }
 
   public async render() {
+    const state = store.getState();
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
-        {this.renderComponents()}
+        <Ground />
+        <Boundary />
+        <Pedestal
+          id='pedestal'
+          position={{x:20, y:0.5, z:0}}
+          color={state.scene.pedestalColor}
+        />
+        {renderHummingBirds(state.hummingbirds)}
+        <gltf-model
+          src='assets/angry-dog.gltf'
+          scale={0.3}
+          position={{x:20, y:1.4, z:0}}
+          rotation={{y:state.scene.dogAngle, x:0, z:0}}
+          transition={{ rotation: { duration: 100, timing: 'linear' } }}
+        />
+        <gltf-model
+          src='assets/donutado.gltf'
+          scale={0.8}
+          position={{x:20, y:8.5, z:0}}
+          rotation={{y:state.scene.donutAngle, x:0, z:0}}
+          transition={{ rotation: { duration: 100, timing: 'linear' } }}
+        />
+        <gltf-model
+          src='assets/steam_train.gltf'
+          scale={2}
+          position={{x:-10, y:-2.5, z:0}}
+          rotation={{y:0, x:0, z:0}}
+        />
+        <gltf-model
+          src="assets/Tree.gltf"
+          id="tree"
+          scale={1.1}
+          position={{ x: 0, y: 0, z: 0 }}
+          skeletalAnimation={[
+            {
+              clip: "Tree_Action",
+              loop: true,
+              playing: this.state.treeShake ? true : false
+            }
+          ]}
+        />
       </scene>
     );
   }
 
-  private renderComponents() {
-    return this.components.map($ => $.render());
+  public async sceneWillUnmount() {
+    this.unsubscribe();
+  }
+
+  private async shakeTree() {
+    this.setState({treeShake: true});
+    setTimeout( () => {
+      this.setState({treeShake: false})
+    }, 2000);
   }
 }

@@ -1,0 +1,168 @@
+{
+    "accessors": [
+        {
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1125,
+            "max": [
+                9.951286315917969,
+                9.377840995788574,
+                6.816659450531006
+            ],
+            "min": [
+                -8.81959342956543,
+                -7.998359680175781,
+                -7.146890163421631
+            ],
+            "name": "accessor_buffer_Torus.000_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1125,
+            "max": [
+                0.99951171875,
+                0.9989623427391052,
+                0.9897457957267761
+            ],
+            "min": [
+                -0.9921262264251709,
+                -0.99969482421875,
+                -0.9977416396141052
+            ],
+            "name": "accessor_buffer_Torus.000_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 6750,
+            "max": [
+                1124
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Torus.000_0",
+            "type": "SCALAR"
+        }
+    ],
+    "asset": {
+        "copyright": "",
+        "generator": "blendergltf v1.2.0",
+        "version": "2.0"
+    },
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteLength": 13500,
+            "byteOffset": 0,
+            "byteStride": 12,
+            "name": "bufferView_buffer_Torus.000_POSITION_0",
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 13500,
+            "byteOffset": 13500,
+            "byteStride": 12,
+            "name": "bufferView_buffer_Torus.000_NORMAL_0",
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteLength": 13504,
+            "byteOffset": 27000,
+            "name": "bufferView_buffer_Torus.000_0",
+            "target": 34963
+        }
+    ],
+    "buffers": [
+        {
+            "byteLength": 40504,
+            "name": "buffer_donutnado",
+            "uri": "buffer_donutnado.bin"
+        }
+    ],
+    "materials": [
+        {
+            "alphaMode": "OPAQUE",
+            "doubleSided": false,
+            "emissiveFactor": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "name": "dona",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.64000004529953,
+                    0.5950424671173096,
+                    0.17249301075935364,
+                    1.0
+                ],
+                "metallicFactor": 0.0,
+                "roughnessFactor": 1.0
+            }
+        }
+    ],
+    "meshes": [
+        {
+            "name": "Torus.000",
+            "primitives": [
+                {
+                    "attributes": {
+                        "NORMAL": 1,
+                        "POSITION": 0
+                    },
+                    "indices": 2,
+                    "material": 0,
+                    "mode": 4
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "mesh": 0,
+            "name": "donas espiral",
+            "rotation": [
+                0.8980244994163513,
+                -0.4328928291797638,
+                -0.03406978026032448,
+                0.07067573070526123
+            ],
+            "scale": [
+                0.9678702354431152,
+                0.9678701758384705,
+                0.96787029504776
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    ],
+    "scene": 0,
+    "scenes": [
+        {
+            "extras": {
+                "background_color": [
+                    0.05087608844041824,
+                    0.05087608844041824,
+                    0.05087608844041824
+                ],
+                "frames_per_second": 24
+            },
+            "name": "Scene",
+            "nodes": [
+                0
+            ]
+        }
+    ]
+}
