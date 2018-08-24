@@ -1,6 +1,4 @@
 import { createElement, ScriptableScene } from 'metaverse-api'
-import { Boundary } from './src/components/Boundary'
-import { Ground } from './src/components/Ground'
 import { renderHummingBirds } from './src/components/HummingBird'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
@@ -61,8 +59,14 @@ export default class OSEVRScene extends ScriptableScene {
     const state = store.getState();
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
-        <Ground />
-        <Boundary />
+        <gltf-model
+          src='assets/models/ground.gltf'
+          position={{x:0, y:0, z:0}}
+        />
+        <gltf-model
+          src='assets/models/boundary.gltf'
+          position={{x:0, y:0, z:0}}
+        />
         <Pedestal
           id='pedestal'
           position={{x:20, y:0.5, z:0}}
