@@ -4,24 +4,28 @@
   "description": "Decentraland Engineering Park",
   "scripts": {
     "start": "dcl preview --no-browser",
-    "build": "metaverse-compiler build.json",
+    "build": "decentraland-compiler build.json",
     "coverage": "npm test -- --coverage",
-    "watch": "metaverse-compiler build.json --watch",
+    "watch": "decentraland-compiler build.json --watch",
     "test": "jest --watch"
   },
   "author": "Tristan Martindale",
   "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightzephyr/engineeringpark.git"
+  },
   "devDependencies": {
-    "@types/jest": "^23.3.1",
-    "ajv": "^6.5.2",
-    "jest": "^23.4.2",
-    "metaverse-api": "^4.0.4",
-    "ts-jest": "^23.1.3",
-    "typescript": "^2.7.2"
+    "@types/jest": "^23.3.2",
+    "ajv": "^6.5.3",
+    "decentraland": "latest",
+    "decentraland-api": "latest",
+    "jest": "^23.6.0",
+    "redux": "^4.0.0",
+    "ts-jest": "^23.1.4",
+    "typescript": "^2.9.2"
   },
-  "dependencies": {
-    "redux": "^4.0.0"
-  },
+  "dependencies": {},
   "jest": {
     "collectCoverageFrom": [
       "<rootDir>/src/App.tsx",

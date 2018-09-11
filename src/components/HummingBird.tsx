@@ -1,4 +1,4 @@
-import { createElement, ISimplifiedNode, Vector3Component } from 'metaverse-api'
+import { createElement, ISimplifiedNode, Vector3Component } from 'decentraland-api'
 import { HummingbirdAction, HummingbirdsState } from '../store/hummingbirds/types'
 
 export interface Props {
@@ -19,9 +19,9 @@ export const HummingBird = (props: Props) => {
         }}
         lookAt={props.position}
         skeletalAnimation={[
-          { clip: "Bird_fly" , playing: true, loop:true },
-          { clip: "Bird_look" , playing: props.action == 'looking' },
-          { clip: "Bird_shake" , playing: props.action == 'shaking' }
+          { clip: "Bird_fly", playing: true, loop: true },
+          { clip: "Bird_look", playing: props.action == 'looking' },
+          { clip: "Bird_shake", playing: props.action == 'shaking' }
         ]}
       />
     </entity>

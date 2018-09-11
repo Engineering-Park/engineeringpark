@@ -23,7 +23,10 @@
     "removeComments": true,
     "outDir": ".",
     "pretty": true,
-    "lib": ["es2017", "dom"]
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   },
   "exclude": [
     "coverage",

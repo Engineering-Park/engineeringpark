@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { Vector3Component } from 'metaverse-api'
+import { Vector3Component } from 'decentraland-api'
 
 // Define action types here
 export const MOVE_HUMMINGBIRD = "MOVE_HUMMINGBIRD";
