@@ -1,18 +1,15 @@
 import { createElement, ScriptableScene } from 'decentraland-api'
-import { renderHummingBirds } from './src/components/HummingBird'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
 import { colours } from './src/store/scene/types'
 import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
-import { createHummingbirdAction, moveHummingbirdAction } from "./src/store/hummingbirds/actions";
-import { IAircraftState, SimulateAircraft } from 'oset';
+import { AircraftModel, AircraftState } from 'oset';
 
 const store = createStore(rootReducer);
 
 export interface State {
-  treeShake: boolean
-  ac: IAircraftState
+  ac: AircraftState
 }
 
 export default class OSEVRScene extends ScriptableScene {
@@ -23,16 +20,18 @@ export default class OSEVRScene extends ScriptableScene {
     super(props);
 
     this.state = {
-      treeShake: false,
       ac: {
-        x: 0, // [m]
-        y: 0, // [m]
-        phi: 0, // [deg]
-        xdot: 0, // [m/s]
-        ydot: 1, // [m/s]
-        phidot: 0 // [deg/s]
+        x: 0,
+        y: 0,
+        phi: 180 * Math.PI / 180,
+        xdot: 0,
+        ydot: -1,
+        phidot: 0
       }
     }
+
+    this.ac = new AircraftModel(this.state.ac);
+    this.ac.setHeadingCommand(Math.PI);
 
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
@@ -54,19 +53,9 @@ export default class OSEVRScene extends ScriptableScene {
       store.dispatch(setDonutAngle(rotateDonuts));
     });
 
-    this.eventSubscriber.on('tree_click', () => {
-      const bird = store.getState().hummingbirds.positions.length;
-      if (bird > 10) { return; }
-      this.shakeTree();
-      store.dispatch(createHummingbirdAction(bird));
-      setInterval(() => {
-        store.dispatch(moveHummingbirdAction(bird));
-      }, 3000 + Math.random() * 2000)
-    })
-
     setInterval(() => {
-      const ac = SimulateAircraft(0.1, this.state.ac, 0);
-      this.setState({ ac });
+      this.ac.run(0.1);
+      this.setState({ ac: this.ac.getState() });
     }, 100);
   }
 
@@ -87,7 +76,6 @@ export default class OSEVRScene extends ScriptableScene {
           position={{ x: 20, y: 0.5, z: 0 }}
           color={state.scene.pedestalColor}
         />
-        {renderHummingBirds(state.hummingbirds)}
         <gltf-model
           src='assets/angry-dog.gltf'
           scale={0.3}
@@ -108,19 +96,6 @@ export default class OSEVRScene extends ScriptableScene {
           position={{ x: -10, y: -2.5, z: 0 }}
           rotation={{ y: 0, x: 0, z: 0 }}
         />
-        <gltf-model
-          src="assets/Tree.gltf"
-          id="tree"
-          scale={1.1}
-          position={{ x: 0, y: 0, z: 0 }}
-          skeletalAnimation={[
-            {
-              clip: "Tree_Action",
-              loop: true,
-              playing: this.state.treeShake ? true : false
-            }
-          ]}
-        />
         <box
           id='flyer'
           color='#46d12e'
@@ -135,10 +110,6 @@ export default class OSEVRScene extends ScriptableScene {
     this.unsubscribe();
   }
 
-  private async shakeTree() {
-    this.setState({ treeShake: true });
-    setTimeout(() => {
-      this.setState({ treeShake: false })
-    }, 2000);
-  }
+  // Properties
+  private ac: AircraftModel;
 }
