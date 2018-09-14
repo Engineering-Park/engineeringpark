@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import { rootReducer } from './src/store'
 import { colours } from './src/store/scene/types'
 import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
-import { AircraftModel, AircraftState } from 'oset';
+import { AircraftModel, AircraftState, FollowTrackController } from 'oset';
 
 const store = createStore(rootReducer);
 
@@ -23,15 +23,17 @@ export default class OSEVRScene extends ScriptableScene {
       ac: {
         x: 0,
         y: 0,
-        phi: 180 * Math.PI / 180,
+        phi: Math.PI,
         xdot: 0,
-        ydot: -1,
+        ydot: -2,
         phidot: 0
       }
     }
 
     this.ac = new AircraftModel(this.state.ac);
-    this.ac.setHeadingCommand(Math.PI);
+
+    this.ftc = new FollowTrackController(1, 5);
+    this.ftc.setTrack({ x: 0, y: 0 }, { x: -10, y: -10 });
 
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
@@ -54,6 +56,8 @@ export default class OSEVRScene extends ScriptableScene {
     });
 
     setInterval(() => {
+      this.ftc.run(0.1, { x: this.state.ac.x, y: this.state.ac.y });
+      this.ac.setHeadingCommand(this.ftc.getHeadingCommand());
       this.ac.run(0.1);
       this.setState({ ac: this.ac.getState() });
     }, 100);
@@ -112,4 +116,5 @@ export default class OSEVRScene extends ScriptableScene {
 
   // Properties
   private ac: AircraftModel;
+  private ftc: FollowTrackController;
 }
