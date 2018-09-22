@@ -88,7 +88,7 @@ export default class OSEVRScene extends ScriptableScene {
         <Pedestal
           id='pedestal'
           position={{ x: -10, y: 0.5, z: -20 }}
-          color={state.scene.pedestalColor}
+          color={state.scene.colour}
         />
         <gltf-model
           src='assets/models/steam_train.gltf'

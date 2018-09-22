@@ -1,12 +1,12 @@
 import { combineReducers, Reducer } from 'redux';
 
 // Import state types and reducers here
-import { SceneState } from './scene/types';
+import { StaticState } from './scene/types';
 import sceneReducer from './scene/reducer';
 
 // The top-level state object
 export interface ApplicationState {
-  scene: SceneState;
+  scene: StaticState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property
