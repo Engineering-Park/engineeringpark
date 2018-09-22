@@ -3,18 +3,18 @@ import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 import { rootReducer } from './src/store'
 import { colours } from './src/store/scene/types'
-import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
+import { setColour } from "./src/store/scene/actions";
 //import { parcelDisplacement } from './src/utils'
 import { AircraftModel, AircraftState, FollowTrackController } from 'oset';
 
 const store = createStore(rootReducer);
 
-export interface State {
+export interface DynamicState {
   ac: AircraftState
 }
 
 export default class OSEVRScene extends ScriptableScene {
-  public state: State;
+  public state: DynamicState;
   private unsubscribe: () => void
 
   constructor(props: any) {
@@ -47,16 +47,9 @@ export default class OSEVRScene extends ScriptableScene {
       store.dispatch(setColour(colours[col]));
     });
 
+    // Update the dynamic state
     setInterval(() => {
-      store.dispatch(setDogAngle(2));
-    }, 100);
-
-    this.subscribeTo('positionChanged', e => {
-      const rotateDonuts = (e.position.x + e.position.z) * 10
-      store.dispatch(setDonutAngle(rotateDonuts));
-    });
-
-    setInterval(() => {
+      // Aircraft position
       if (this.state.ac.y < -100) {
         this.state.ac.y = -20;
       }
@@ -94,22 +87,8 @@ export default class OSEVRScene extends ScriptableScene {
         />
         <Pedestal
           id='pedestal'
-          position={{ x: 20, y: 0.5, z: 0 }}
+          position={{ x: -10, y: 0.5, z: -20 }}
           color={state.scene.pedestalColor}
-        />
-        <gltf-model
-          src='assets/angry-dog.gltf'
-          scale={0.3}
-          position={{ x: 20, y: 1.4, z: 0 }}
-          rotation={{ y: state.scene.dogAngle, x: 0, z: 0 }}
-          transition={{ rotation: { duration: 100, timing: 'linear' } }}
-        />
-        <gltf-model
-          src='assets/donutado.gltf'
-          scale={0.8}
-          position={{ x: 20, y: 8.5, z: 0 }}
-          rotation={{ y: state.scene.donutAngle, x: 0, z: 0 }}
-          transition={{ rotation: { duration: 100, timing: 'linear' } }}
         />
         <gltf-model
           src='assets/steam_train.gltf'
