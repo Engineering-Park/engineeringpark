@@ -42,7 +42,7 @@ export default class OSEVRScene extends ScriptableScene {
   }
 
   public async sceneDidMount() {
-    this.eventSubscriber.on(`pedestal_click`, () => {
+    this.eventSubscriber.on(`credits_jet_click`, () => {
       let col = Math.floor(Math.random() * colours.length);
       store.dispatch(setColour(colours[col]));
     });
@@ -85,20 +85,27 @@ export default class OSEVRScene extends ScriptableScene {
           outlineColor='#ff0000'
           outlineWidth={10}
         />
-        <Pedestal
-          id='pedestal'
-          position={{ x: -10, y: 0.5, z: -20 }}
-          color={state.scene.colour}
-        />
         <gltf-model
           src='assets/models/steam_train.gltf'
           position={{ x: -4, y: 0, z: 0 }}
           rotation={{ x: 0, y: -90, z: 0 }}
         />
+        <Pedestal
+          id='credits_steam_train'
+          value='Steam Train by Jarlan Perez, used under CC-BY'
+          position={{ x: -4, y: 0, z: 4 }}
+          color={state.scene.colour}
+        />
         <gltf-model
           src='assets/models/jet.gltf'
           position={{ x: this.state.ac.x, y: 0.5, z: this.state.ac.y }}
           transition={{ position: { duration: 100, timing: 'linear' } }}
+        />
+        <Pedestal
+          id='credits_jet'
+          value='Jet by Poly by Google, used under CC-BY'
+          position={{ x: 5, y: 0, z: -15 }}
+          color={state.scene.colour}
         />
       </scene>
     );
