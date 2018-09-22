@@ -4,6 +4,7 @@ import { createStore } from 'redux'
 import { rootReducer } from './src/store'
 import { colours } from './src/store/scene/types'
 import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
+//import { parcelDisplacement } from './src/utils'
 import { AircraftModel, AircraftState, FollowTrackController } from 'oset';
 
 const store = createStore(rootReducer);
@@ -21,8 +22,8 @@ export default class OSEVRScene extends ScriptableScene {
 
     this.state = {
       ac: {
-        x: 0,
-        y: 0,
+        x: 10,
+        y: -20,
         phi: Math.PI,
         xdot: 0,
         ydot: -2,
@@ -33,7 +34,7 @@ export default class OSEVRScene extends ScriptableScene {
     this.ac = new AircraftModel(this.state.ac);
 
     this.ftc = new FollowTrackController(1, 5);
-    this.ftc.setTrack({ x: 0, y: 0 }, { x: -10, y: -10 });
+    this.ftc.setTrack({ x: 10, y: -20 }, { x: 10, y: -30 });
 
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
@@ -56,6 +57,10 @@ export default class OSEVRScene extends ScriptableScene {
     });
 
     setInterval(() => {
+      if (this.state.ac.y < -100) {
+        this.state.ac.y = -20;
+      }
+
       this.ftc.run(0.1, { x: this.state.ac.x, y: this.state.ac.y });
       this.ac.setHeadingCommand(this.ftc.getHeadingCommand());
       this.ac.run(0.1);
@@ -114,7 +119,7 @@ export default class OSEVRScene extends ScriptableScene {
         />
         <gltf-model
           src='assets/models/jet.gltf'
-          position={{ x: 10, y: 0.5, z: -20 }}
+          position={{ x: this.state.ac.x, y: 0.5, z: this.state.ac.y }}
           transition={{ position: { duration: 100, timing: 'linear' } }}
         />
       </scene>
