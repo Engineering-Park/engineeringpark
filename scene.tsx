@@ -75,6 +75,18 @@ export default class OSEVRScene extends ScriptableScene {
           src='assets/models/boundary.gltf'
           position={{ x: 0, y: 0, z: 0 }}
         />
+        <text
+          value='Engineering Park'
+          position={{ x: 0, y: 5.5, z: -4 }}
+          rotation={{ x: 0, y: 180, z: 0 }}
+          width={10}
+          height={2}
+          fontFamily='Georgia'
+          fontSize={650}
+          color='#00ffff'
+          outlineColor='#ff0000'
+          outlineWidth={10}
+        />
         <Pedestal
           id='pedestal'
           position={{ x: 20, y: 0.5, z: 0 }}
@@ -100,10 +112,9 @@ export default class OSEVRScene extends ScriptableScene {
           position={{ x: -10, y: -2.5, z: 0 }}
           rotation={{ y: 0, x: 0, z: 0 }}
         />
-        <box
-          id='flyer'
-          color='#46d12e'
-          position={{ x: this.state.ac.x, y: 1, z: this.state.ac.y }}
+        <gltf-model
+          src='assets/models/jet.gltf'
+          position={{ x: 10, y: 0.5, z: -20 }}
           transition={{ position: { duration: 100, timing: 'linear' } }}
         />
       </scene>
