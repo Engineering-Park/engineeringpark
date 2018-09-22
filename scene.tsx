@@ -91,10 +91,9 @@ export default class OSEVRScene extends ScriptableScene {
           color={state.scene.pedestalColor}
         />
         <gltf-model
-          src='assets/steam_train.gltf'
-          scale={2}
-          position={{ x: -10, y: -2.5, z: 0 }}
-          rotation={{ y: 0, x: 0, z: 0 }}
+          src='assets/models/steam_train.gltf'
+          position={{ x: -4, y: 0, z: 0 }}
+          rotation={{ x: 0, y: -90, z: 0 }}
         />
         <gltf-model
           src='assets/models/jet.gltf'
