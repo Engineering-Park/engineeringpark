@@ -1,11 +1,8 @@
 import { createElement, ScriptableScene } from 'decentraland-api'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
-import { rootReducer } from './src/store'
-import { colours } from './src/store/scene/types'
-import { setColour } from "./src/store/scene/actions";
 //import { parcelDisplacement } from './src/utils'
-import { AircraftModel, AircraftState, FollowTrackController } from 'oset';
+import { addEntity, AircraftModel, AircraftState, FollowTrackController, rootReducer } from 'oset';
 
 const store = createStore(rootReducer);
 
@@ -42,9 +39,8 @@ export default class OSEVRScene extends ScriptableScene {
   }
 
   public async sceneDidMount() {
-    this.eventSubscriber.on(`credits_jet_click`, () => {
-      let col = Math.floor(Math.random() * colours.length);
-      store.dispatch(setColour(colours[col]));
+    this.eventSubscriber.on(`steam_train_click`, () => {
+      store.dispatch(addEntity('newEntity'));
     });
 
     // Update the dynamic state
@@ -62,7 +58,7 @@ export default class OSEVRScene extends ScriptableScene {
   }
 
   public async render() {
-    const state = store.getState();
+    //const state = store.getState();
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <gltf-model
@@ -86,6 +82,7 @@ export default class OSEVRScene extends ScriptableScene {
           outlineWidth={10}
         />
         <gltf-model
+          id='steam_train'
           src='assets/models/steam_train.gltf'
           position={{ x: -4, y: 0, z: 0 }}
           rotation={{ x: 0, y: -90, z: 0 }}
@@ -94,9 +91,10 @@ export default class OSEVRScene extends ScriptableScene {
           id='credits_steam_train'
           value='Steam Train by Jarlan Perez, used under CC-BY'
           position={{ x: -4, y: 0, z: 4 }}
-          color={state.scene.colour}
+          color={'#3d9693'}
         />
         <gltf-model
+          id='jet'
           src='assets/models/jet.gltf'
           position={{ x: this.state.ac.x, y: 0.5, z: this.state.ac.y }}
           transition={{ position: { duration: 100, timing: 'linear' } }}
@@ -105,7 +103,7 @@ export default class OSEVRScene extends ScriptableScene {
           id='credits_jet'
           value='Jet by Poly by Google, used under CC-BY'
           position={{ x: 5, y: 0, z: -15 }}
-          color={state.scene.colour}
+          color={'#e8daa0'}
         />
       </scene>
     );
