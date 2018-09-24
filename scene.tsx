@@ -2,7 +2,8 @@ import { createElement, ScriptableScene } from 'decentraland-api'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
-import { addEntity, AircraftModel, AircraftState, FollowTrackController, rootReducer } from 'oset';
+import { addEntity, rootReducer } from 'oset';
+import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
 const store = createStore(rootReducer);
 
