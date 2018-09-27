@@ -19,7 +19,7 @@
     "@types/jest": "^23.3.2",
     "ajv": "^6.5.3",
     "decentraland": "latest",
-    "decentraland-api": "^4.1.1",
+    "decentraland-api": "latest",
     "jest": "^23.6.0",
     "redux": "^4.0.0",
     "ts-jest": "^23.1.4",

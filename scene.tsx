@@ -1,4 +1,4 @@
-import { createElement, ScriptableScene } from 'decentraland-api'
+import * as DCL from 'decentraland-api'
 import { Pedestal } from "./src/components/Pedestal";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
@@ -11,7 +11,7 @@ export interface DynamicState {
   ac: AircraftState
 }
 
-export default class OSEVRScene extends ScriptableScene {
+export default class OSEVRScene extends DCL.ScriptableScene {
   public state: DynamicState;
   private unsubscribe: () => void
 

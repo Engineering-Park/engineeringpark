@@ -1,9 +1,9 @@
-import { createElement, Vector3Component } from 'decentraland-api'
+import * as DCL from 'decentraland-api'
 
 export interface Props {
   id: string;
   value: string;
-  position: Vector3Component;
+  position: DCL.Vector3Component;
   color: string | number;
 }
 
