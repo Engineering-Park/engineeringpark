@@ -1,5 +1,6 @@
 import * as DCL from 'decentraland-api'
 import { Pedestal } from "./src/components/Pedestal";
+import { SBSNode } from "./src/components/SBSNode";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
 import { addEntity, rootReducer } from 'oset';
@@ -40,10 +41,6 @@ export default class OSEVRScene extends DCL.ScriptableScene {
   }
 
   public async sceneDidMount() {
-    this.eventSubscriber.on(`steam_train_click`, () => {
-      store.dispatch(addEntity('newEntity'));
-    });
-
     // Update the dynamic state
     setInterval(() => {
       // Aircraft position
@@ -59,7 +56,7 @@ export default class OSEVRScene extends DCL.ScriptableScene {
   }
 
   public async render() {
-    //const state = store.getState();
+    const state = store.getState();
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <gltf-model
@@ -105,6 +102,14 @@ export default class OSEVRScene extends DCL.ScriptableScene {
           value='Jet by Poly by Google, used under CC-BY'
           position={{ x: 5, y: 0, z: -15 }}
           color={'#e8daa0'}
+        />
+        <SBSNode
+          id='sbs_node'
+          children={state.model.entities}
+          position={{ x: -20, y: 1, z: -30 }}
+          colour={'#15a83f'}
+          scale={0.5}
+          onClick={() => store.dispatch(addEntity('newEntity'))}
         />
       </scene>
     );
