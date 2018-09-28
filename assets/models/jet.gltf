@@ -1,0 +1,221 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5123,
+            "count" : 2784,
+            "max" : [
+                1901
+            ],
+            "min" : [
+                0
+            ],
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 1902,
+            "max" : [
+                68.32469940185547,
+                64.8664321899414,
+                -0.00021499999274965376
+            ],
+            "min" : [
+                -68.32469940185547,
+                -64.8664321899414,
+                -39.5657844543457
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 1902,
+            "max" : [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min" : [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 1902,
+            "max" : [
+                0.8842795491218567,
+                0.6804201006889343,
+                0.7137561440467834,
+                1.0
+            ],
+            "min" : [
+                -0.9989427924156189,
+                -0.9999958276748657,
+                -0.7210718393325806,
+                -1.0
+            ],
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 1902,
+            "max" : [
+                0.8873220086097717,
+                0.8156280070543289
+            ],
+            "min" : [
+                0.08027900010347366,
+                0.07291901111602783
+            ],
+            "type" : "VEC2"
+        }
+    ],
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter",
+        "version" : "2.0"
+    },
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 5568,
+            "byteOffset" : 0,
+            "target" : 34963
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 22824,
+            "byteOffset" : 5568,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 22824,
+            "byteOffset" : 28392,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 30432,
+            "byteOffset" : 51216,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 15216,
+            "byteOffset" : 81648,
+            "target" : 34962
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 96864,
+            "uri" : "jet.bin"
+        }
+    ],
+    "images" : [
+        {
+            "name" : "1397 Jet",
+            "uri" : "1397 Jet.png"
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "Mat",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.6400000190734865,
+                    0.6400000190734865,
+                    0.6400000190734865,
+                    1.0
+                ],
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicFactor" : 0.0
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Jet",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 2,
+                        "POSITION" : 1,
+                        "TANGENT" : 3,
+                        "TEXCOORD_0" : 4
+                    },
+                    "indices" : 0,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "name" : "Camera",
+            "rotation" : [
+                0.483536034822464,
+                0.33687159419059753,
+                -0.20870360732078552,
+                0.7804827094078064
+            ],
+            "translation" : [
+                7.481131553649902,
+                5.34366512298584,
+                6.5076398849487305
+            ]
+        },
+        {
+            "mesh" : 0,
+            "name" : "Jet",
+            "rotation" : [
+                0.7071068286895752,
+                0.0,
+                -0.0,
+                0.7071067094802856
+            ],
+            "scale" : [
+                0.056446999311447144,
+                0.056446999311447144,
+                0.056446999311447144
+            ]
+        },
+        {
+            "name" : "Sun",
+            "translation" : [
+                -18.9105224609375,
+                62.21465301513672,
+                -16.939178466796875
+            ]
+        }
+    ],
+    "samplers" : [
+        {}
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                2,
+                1,
+                0
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        }
+    ]
+}

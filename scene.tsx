@@ -1,30 +1,39 @@
-import { createElement, ScriptableScene } from 'metaverse-api'
-import { Boundary } from './src/components/Boundary'
-import { Ground } from './src/components/Ground'
-import { renderHummingBirds } from './src/components/HummingBird'
+import * as DCL from 'decentraland-api'
 import { Pedestal } from "./src/components/Pedestal";
+import { SBSNode } from "./src/components/SBSNode";
 import { createStore } from 'redux'
-import { rootReducer } from './src/store'
-import { colours } from './src/store/scene/types'
-import { setColour, setDogAngle, setDonutAngle } from "./src/store/scene/actions";
-import { createHummingbirdAction, moveHummingbirdAction } from "./src/store/hummingbirds/actions";
+//import { parcelDisplacement } from './src/utils'
+import { addEntity, rootReducer } from 'oset';
+import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
 const store = createStore(rootReducer);
 
-export interface State {
-  treeShake: boolean
- }
+export interface DynamicState {
+  ac: AircraftState
+}
 
-export default class OSEVRScene extends ScriptableScene {
-  public state: State;
+export default class OSEVRScene extends DCL.ScriptableScene {
+  public state: DynamicState;
   private unsubscribe: () => void
 
   constructor(props: any) {
     super(props);
 
     this.state = {
-      treeShake: false
+      ac: {
+        x: 10,
+        y: -20,
+        phi: Math.PI,
+        xdot: 0,
+        ydot: -2,
+        phidot: 0
+      }
     }
+
+    this.ac = new AircraftModel(this.state.ac);
+
+    this.ftc = new FollowTrackController(1, 5);
+    this.ftc.setTrack({ x: 10, y: -20 }, { x: 10, y: -30 });
 
     this.unsubscribe = store.subscribe(() => {
       this.forceUpdate();
@@ -32,75 +41,75 @@ export default class OSEVRScene extends ScriptableScene {
   }
 
   public async sceneDidMount() {
-    this.eventSubscriber.on(`pedestal_click`, () => {
-      let col = Math.floor(Math.random() * colours.length);
-      store.dispatch(setColour(colours[col]));
-    });
-
+    // Update the dynamic state
     setInterval(() => {
-      store.dispatch(setDogAngle(2));
+      // Aircraft position
+      if (this.state.ac.y < -100) {
+        this.state.ac.y = -20;
+      }
+
+      this.ftc.run(0.1, { x: this.state.ac.x, y: this.state.ac.y });
+      this.ac.setHeadingCommand(this.ftc.getHeadingCommand());
+      this.ac.run(0.1);
+      this.setState({ ac: this.ac.getState() });
     }, 100);
-
-    this.subscribeTo('positionChanged', e => {
-      const rotateDonuts = ( e.position.x + e.position.z) * 10
-      store.dispatch(setDonutAngle(rotateDonuts));
-    });
-
-    this.eventSubscriber.on('tree_click', () => {
-      const bird = store.getState().hummingbirds.positions.length;
-      if (bird > 10) {return;}
-      this.shakeTree();
-      store.dispatch(createHummingbirdAction(bird));
-      setInterval(() => {
-        store.dispatch(moveHummingbirdAction(bird));
-      }, 3000 + Math.random() * 2000)
-    })
   }
 
   public async render() {
     const state = store.getState();
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
-        <Ground />
-        <Boundary />
-        <Pedestal
-          id='pedestal'
-          position={{x:20, y:0.5, z:0}}
-          color={state.scene.pedestalColor}
-        />
-        {renderHummingBirds(state.hummingbirds)}
         <gltf-model
-          src='assets/angry-dog.gltf'
-          scale={0.3}
-          position={{x:20, y:1.4, z:0}}
-          rotation={{y:state.scene.dogAngle, x:0, z:0}}
-          transition={{ rotation: { duration: 100, timing: 'linear' } }}
-        />
-        <gltf-model
-          src='assets/donutado.gltf'
-          scale={0.8}
-          position={{x:20, y:8.5, z:0}}
-          rotation={{y:state.scene.donutAngle, x:0, z:0}}
-          transition={{ rotation: { duration: 100, timing: 'linear' } }}
-        />
-        <gltf-model
-          src='assets/steam_train.gltf'
-          scale={2}
-          position={{x:-10, y:-2.5, z:0}}
-          rotation={{y:0, x:0, z:0}}
-        />
-        <gltf-model
-          src="assets/Tree.gltf"
-          id="tree"
-          scale={1.1}
+          src='assets/models/ground.gltf'
           position={{ x: 0, y: 0, z: 0 }}
-          skeletalAnimation={[
-            {
-              clip: "Tree_Action",
-              loop: true,
-              playing: this.state.treeShake ? true : false
-            }
-          ]}
+        />
+        <gltf-model
+          src='assets/models/boundary.gltf'
+          position={{ x: 0, y: 0, z: 0 }}
+        />
+        <text
+          value='Engineering Park'
+          position={{ x: 0, y: 5.5, z: -4 }}
+          rotation={{ x: 0, y: 180, z: 0 }}
+          width={10}
+          height={2}
+          fontFamily='Georgia'
+          fontSize={650}
+          color='#00ffff'
+          outlineColor='#ff0000'
+          outlineWidth={10}
+        />
+        <gltf-model
+          id='steam_train'
+          src='assets/models/steam_train.gltf'
+          position={{ x: -4, y: 0, z: 0 }}
+          rotation={{ x: 0, y: -90, z: 0 }}
+        />
+        <Pedestal
+          id='credits_steam_train'
+          value='Steam Train by Jarlan Perez, used under CC-BY'
+          position={{ x: -4, y: 0, z: 4 }}
+          color={'#3d9693'}
+        />
+        <gltf-model
+          id='jet'
+          src='assets/models/jet.gltf'
+          position={{ x: this.state.ac.x, y: 0.5, z: this.state.ac.y }}
+          transition={{ position: { duration: 100, timing: 'linear' } }}
+        />
+        <Pedestal
+          id='credits_jet'
+          value='Jet by Poly by Google, used under CC-BY'
+          position={{ x: 5, y: 0, z: -15 }}
+          color={'#e8daa0'}
+        />
+        <SBSNode
+          id='sbs_node'
+          children={state.model.entities}
+          position={{ x: -20, y: 1, z: -30 }}
+          colour={'#15a83f'}
+          scale={0.5}
+          onClick={() => store.dispatch(addEntity('newEntity'))}
         />
       </scene>
     );
@@ -110,10 +119,7 @@ export default class OSEVRScene extends ScriptableScene {
     this.unsubscribe();
   }
 
-  private async shakeTree() {
-    this.setState({treeShake: true});
-    setTimeout( () => {
-      this.setState({treeShake: false})
-    }, 2000);
-  }
+  // Properties
+  private ac: AircraftModel;
+  private ftc: FollowTrackController;
 }

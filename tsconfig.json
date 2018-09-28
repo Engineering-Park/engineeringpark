@@ -19,11 +19,14 @@
     "baseUrl": ".",
     "strict": true,
     "jsx": "react",
-    "jsxFactory": "createElement",
+    "jsxFactory": "DCL.createElement",
     "removeComments": true,
     "outDir": ".",
     "pretty": true,
-    "lib": ["es2017", "dom"]
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   },
   "exclude": [
     "coverage",
