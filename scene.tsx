@@ -3,7 +3,7 @@ import { Pedestal } from "./src/components/Pedestal";
 import { SBSNode } from "./src/components/SBSNode";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
-import { addEntity, rootReducer } from 'oset';
+import { addElement, Element, rootReducer } from 'oset';
 import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
 const store = createStore(rootReducer);
@@ -105,11 +105,11 @@ export default class OSEVRScene extends DCL.ScriptableScene {
         />
         <SBSNode
           id='sbs_node'
-          children={state.model.entities}
+          children={state.model.elements}
           position={{ x: -20, y: 1, z: -30 }}
           colour={'#15a83f'}
           scale={0.5}
-          onClick={() => store.dispatch(addEntity('newEntity'))}
+          onClick={() => store.dispatch(addElement(new Element('element1')))}
         />
       </scene>
     );

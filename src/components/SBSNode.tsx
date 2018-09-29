@@ -1,8 +1,9 @@
 import * as DCL from 'decentraland-api'
+import { Element } from 'oset'
 
 export interface Props {
   id: string;
-  children: Array<string>;
+  children: Element[];
   position: DCL.Vector3Component;
   colour: string;
   scale: number;
@@ -21,8 +22,8 @@ export const SBSNode = (props: Props) => {
   );
 }
 
-const childNodes = (nodeNames: string[], w: number, hs: number, vs: number) => {
-  const c = nodeNames.length;
+const childNodes = (elements: Element[], w: number, hs: number, vs: number) => {
+  const c = elements.length;
   const nw = (c * w) + ((c - 1) * hs);
   const x0 = -(nw - w) / 2;
   let nodeBoxes: DCL.ISimplifiedNode[] = [];
