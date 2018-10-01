@@ -1,15 +1,16 @@
 import * as DCL from 'decentraland-api'
 import { Pedestal } from "./src/components/Pedestal";
-import { SBSNode } from "./src/components/SBSNode";
+import { Tree } from "src/components/Tree";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
-import { addElement, Element, rootReducer } from 'oset';
+import { addElement, rootReducer } from 'oset';
 import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
 const store = createStore(rootReducer);
 
 export interface DynamicState {
   ac: AircraftState
+  sbs: number;
 }
 
 export default class OSEVRScene extends DCL.ScriptableScene {
@@ -27,7 +28,8 @@ export default class OSEVRScene extends DCL.ScriptableScene {
         xdot: 0,
         ydot: -2,
         phidot: 0
-      }
+      },
+      sbs: 0
     }
 
     this.ac = new AircraftModel(this.state.ac);
@@ -53,6 +55,11 @@ export default class OSEVRScene extends DCL.ScriptableScene {
       this.ac.run(0.1);
       this.setState({ ac: this.ac.getState() });
     }, 100);
+
+    //temp for test
+    store.dispatch(addElement({ id: 'element1', relationships: { built_from: ['element2', 'element3'], built_in: [] } }));
+    store.dispatch(addElement({ id: 'element2', relationships: { built_from: [], built_in: ['element1'] } }));
+    store.dispatch(addElement({ id: 'element3', relationships: { built_from: [], built_in: ['element1'] } }));
   }
 
   public async render() {
@@ -103,17 +110,17 @@ export default class OSEVRScene extends DCL.ScriptableScene {
           position={{ x: 5, y: 0, z: -15 }}
           color={'#e8daa0'}
         />
-        <SBSNode
-          id='sbs_node'
-          children={state.model.elements}
+        <Tree
+          id='sbs_tree'
+          elements={state.model.elements}
           position={{ x: -20, y: 1, z: -30 }}
           colour={'#15a83f'}
           scale={0.5}
-          onClick={() => store.dispatch(addElement(new Element('element1')))}
         />
       </scene>
     );
   }
+  //onClick={() => store.dispatch(addElement({ id: 'element1', relationships: { built_from: [], built_in: [] } }))}
 
   public async sceneWillUnmount() {
     this.unsubscribe();
