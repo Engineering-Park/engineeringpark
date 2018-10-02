@@ -13,7 +13,11 @@ export const Leaf = (props: Props) => {
 
   return (
     <entity>
-      <box id={props.id} position={props.position} color={props.colour} onClick={onClick}>
+      <box
+        id={props.id}
+        position={props.position}
+        color={props.colour}
+        onClick={onClick}>
         <text
           value={props.id}
           position={{ x: 0, y: 0, z: -props.scale - 0.01 }}
