@@ -112,18 +112,23 @@ export default class OSEVRScene extends DCL.ScriptableScene {
         />
         <Tree
           id='sbs_tree'
-          elements={state.model.elements}
           position={{ x: -20, y: 1, z: -30 }}
+          elements={state.model.elements}
           colour={'#15a83f'}
           scale={0.5}
+          onClick={this.treeCB}
         />
       </scene>
     );
   }
-  //onClick={() => store.dispatch(addElement({ id: 'element1', relationships: { built_from: [], built_in: [] } }))}
 
   public async sceneWillUnmount() {
     this.unsubscribe();
+  }
+
+  // Callbacks
+  private treeCB = (id: string) => {
+    store.dispatch(addElement({ id, relationships: { built_from: [], built_in: [] } }));
   }
 
   // Properties
