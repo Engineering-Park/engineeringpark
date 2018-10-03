@@ -3,7 +3,7 @@ import { Pedestal } from "./src/components/Pedestal";
 import { Tree } from "src/components/Tree";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
-import { addElement, rootReducer } from 'oset';
+import { addElement, Node, rootReducer } from 'oset';
 import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
 const store = createStore(rootReducer);
@@ -63,7 +63,10 @@ export default class OSEVRScene extends DCL.ScriptableScene {
   }
 
   public async render() {
-    const state = store.getState();
+    //const state = store.getState();
+    let rootNode = new Node('root');
+    rootNode.addChild(new Node('node1'));
+    rootNode.addChild(new Node('node2'));
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <gltf-model
@@ -113,10 +116,10 @@ export default class OSEVRScene extends DCL.ScriptableScene {
         <Tree
           id='sbs_tree'
           position={{ x: -20, y: 1, z: -30 }}
-          elements={state.model.elements}
           colour={'#15a83f'}
           scale={0.5}
           onClick={this.treeCB}
+          rootNode={rootNode}
         />
       </scene>
     );
@@ -128,7 +131,8 @@ export default class OSEVRScene extends DCL.ScriptableScene {
 
   // Callbacks
   private treeCB = (id: string) => {
-    store.dispatch(addElement({ id, relationships: { built_from: [], built_in: [] } }));
+    console.log(id)
+    //store.dispatch(addElement({ id, relationships: { built_from: [], built_in: [] } }));
   }
 
   // Properties
