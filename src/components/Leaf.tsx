@@ -12,9 +12,8 @@ export const Leaf = (props: Props) => {
   const onClick = () => { props.onClick(props.id) };
 
   return (
-    <entity>
+    <entity id={props.id}>
       <box
-        id={props.id}
         position={props.position}
         color={props.colour}
         onClick={onClick}
