@@ -5,11 +5,11 @@ export interface Props {
   position: DCL.Vector3Component;
   colour: string;
   scale: number;
-  onClick: () => void;
+  onClick: (id: string) => void;
 }
 
 export const Leaf = (props: Props) => {
-  const onClick = () => { props.onClick() };
+  const onClick = () => { props.onClick(props.id) };
 
   return (
     <entity>
@@ -17,7 +17,8 @@ export const Leaf = (props: Props) => {
         id={props.id}
         position={props.position}
         color={props.colour}
-        onClick={onClick}>
+        onClick={onClick}
+      >
         <text
           value={props.id}
           position={{ x: 0, y: 0, z: -props.scale - 0.01 }}
@@ -29,6 +30,6 @@ export const Leaf = (props: Props) => {
           textWrapping={true}
         />
       </box>
-    </entity>
+    </entity >
   );
 }
