@@ -21,10 +21,10 @@ export const Leaf = (props: Props) => {
         <text
           value={props.id}
           position={{ x: 0, y: 0, z: -props.scale - 0.01 }}
-          width={props.scale + 0.1}
-          height={props.scale + 0.1}
+          width={props.scale + 0.4}
+          height={props.scale + 0.4}
           fontFamily='Georgia'
-          fontSize={250 * props.scale}
+          fontSize={150 * props.scale}
           color={'#ffffff'}
           textWrapping={true}
         />
