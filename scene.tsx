@@ -3,7 +3,7 @@ import { Pedestal } from "./src/components/Pedestal";
 import { Tree } from "src/components/Tree";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
-import { addElement, Node, rootReducer } from 'oset';
+import { addElement, rootReducer } from 'oset';
 import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
 const store = createStore(rootReducer);
@@ -57,16 +57,19 @@ export default class OSEVRScene extends DCL.ScriptableScene {
     }, 100);
 
     //temp for test
-    store.dispatch(addElement({ id: 'element1', relationships: { built_from: ['element2', 'element3'], built_in: [] } }));
+    store.dispatch(addElement({ id: 'element1', relationships: { built_from: ['element2', 'element3', 'element4'], built_in: [] } }));
     store.dispatch(addElement({ id: 'element2', relationships: { built_from: [], built_in: ['element1'] } }));
     store.dispatch(addElement({ id: 'element3', relationships: { built_from: [], built_in: ['element1'] } }));
+    store.dispatch(addElement({ id: 'element4', relationships: { built_from: [], built_in: ['element1'] } }));
+
+    this.subscribeTo("click", e => {
+      console.log(e.elementId + ` clicked`);
+    })
   }
 
   public async render() {
-    //const state = store.getState();
-    let rootNode = new Node('root');
-    rootNode.addChild(new Node('node1'));
-    rootNode.addChild(new Node('node2'));
+    const state = store.getState();
+
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <gltf-model
@@ -115,11 +118,11 @@ export default class OSEVRScene extends DCL.ScriptableScene {
         />
         <Tree
           id='sbs_tree'
-          position={{ x: -20, y: 1, z: -30 }}
+          position={{ x: -20, y: 2, z: -30 }}
           colour={'#15a83f'}
           scale={0.5}
           onClick={this.treeCB}
-          rootNode={rootNode}
+          elements={state.model.elements}
         />
       </scene>
     );
@@ -131,8 +134,9 @@ export default class OSEVRScene extends DCL.ScriptableScene {
 
   // Callbacks
   private treeCB = (id: string) => {
-    console.log(id)
-    //store.dispatch(addElement({ id, relationships: { built_from: [], built_in: [] } }));
+    console.log(id);
+    // const newID = id +`1`;
+    // store.dispatch(addElement({ newID, relationships: { built_from: [], built_in: ['element1'] } }));
   }
 
   // Properties
