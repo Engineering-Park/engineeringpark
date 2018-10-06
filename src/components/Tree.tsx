@@ -1,6 +1,6 @@
 import * as DCL from 'decentraland-api'
 import { Leaf } from './Leaf'
-import { Node } from 'oset'
+import { createTree, Element } from 'oset'
 
 export interface Props {
   id: string;
@@ -8,10 +8,13 @@ export interface Props {
   colour: string;
   scale: number;
   onClick: (id: string) => void;
-  rootNode: Node;
+  elements: Element[];
 }
 
 export const Tree = (props: Props) => {
+  const tree = createTree(props.elements, 'built_from', 'built_in');
+  if (!tree) { return; }
+
   const renderNode = (id: string, position: DCL.Vector3Component) => {
     return Leaf({
       id,
@@ -23,7 +26,7 @@ export const Tree = (props: Props) => {
   }
 
   const renderLeaves = () => {
-    const leafNodes = props.rootNode.children();
+    const leafNodes = tree.children();
     if (leafNodes.length === 0) { return }
 
     const nodeWidth = 1;
@@ -44,7 +47,7 @@ export const Tree = (props: Props) => {
 
   return (
     <entity id={props.id} position={props.position}>
-      {renderNode(props.id, { x: 0, y: 0, z: 0 })}
+      {renderNode(tree.id(), { x: 0, y: 0, z: 0 })}
       {renderLeaves()}
     </entity >
   );
