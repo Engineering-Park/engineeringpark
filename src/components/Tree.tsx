@@ -5,6 +5,7 @@ import { createTree, Element } from 'oset'
 export interface Props {
   id: string;
   position: DCL.Vector3Component;
+  rotation: DCL.Vector3Component;
   colour: string;
   scale: number;
   onClick: (id: string) => void;
@@ -46,7 +47,7 @@ export const Tree = (props: Props) => {
   }
 
   return (
-    <entity id={props.id} position={props.position}>
+    <entity id={props.id} position={props.position} rotation={props.rotation}>
       {renderNode(tree.id(), { x: 0, y: 0, z: 0 })}
       {renderLeaves()}
     </entity >

@@ -119,6 +119,7 @@ export default class OSEVRScene extends DCL.ScriptableScene {
         <Tree
           id='sbs_tree'
           position={{ x: -20, y: 2, z: -30 }}
+          rotation={{ x: 0, y: 0, z: 0 }}
           colour={'#15a83f'}
           scale={0.5}
           onClick={this.treeCB}

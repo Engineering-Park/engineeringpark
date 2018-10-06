@@ -9,19 +9,28 @@ export interface Props {
 }
 
 export const Leaf = (props: Props) => {
-  const onClick = () => { props.onClick(props.id) };
-
   return (
     <entity>
       <box
         id={props.id}
         position={props.position}
         color={props.colour}
-        onClick={(onClick)}
+        onClick={() => { props.onClick(props.id) }}
       >
         <text
           value={props.id}
           position={{ x: 0, y: 0, z: -props.scale - 0.01 }}
+          width={props.scale + 0.4}
+          height={props.scale + 0.4}
+          fontFamily='Georgia'
+          fontSize={150 * props.scale}
+          color={'#ffffff'}
+          textWrapping={true}
+        />
+        <text
+          value={props.id}
+          position={{ x: 0, y: 0, z: props.scale + 0.01 }}
+          rotation={{ x: 0, y: 180, z: 0 }}
           width={props.scale + 0.4}
           height={props.scale + 0.4}
           fontFamily='Georgia'
