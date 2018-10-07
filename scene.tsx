@@ -61,10 +61,6 @@ export default class OSEVRScene extends DCL.ScriptableScene {
     store.dispatch(addElement({ id: 'element2', relationships: { built_from: [], built_in: ['element1'] } }));
     store.dispatch(addElement({ id: 'element3', relationships: { built_from: [], built_in: ['element1'] } }));
     store.dispatch(addElement({ id: 'element4', relationships: { built_from: [], built_in: ['element1'] } }));
-
-    this.subscribeTo("click", e => {
-      console.log(e.elementId + ` clicked`);
-    })
   }
 
   public async render() {

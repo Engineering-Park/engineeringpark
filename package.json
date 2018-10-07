@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Decentraland Engineering Park",
   "scripts": {
-    "start": "dcl preview --no-browser",
+    "start": "dcl start --no-browser",
     "build": "decentraland-compiler build.json",
     "coverage": "npm test -- --coverage",
     "watch": "decentraland-compiler build.json --watch",
@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.2",
     "ajv": "^6.5.3",
-    "decentraland": "latest",
+    "decentraland": "^1.4.0",
     "decentraland-api": "latest",
     "jest": "^23.6.0",
     "redux": "^4.0.0",
