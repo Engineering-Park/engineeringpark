@@ -3,7 +3,7 @@ import { Pedestal } from "./src/components/Pedestal";
 import { Tree } from "src/components/Tree";
 import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
-import { addElement, rootReducer } from 'oset';
+import { addElementActionCreator, addRelationshipActionCreator, rootReducer } from 'oset';
 import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
 const store = createStore(rootReducer);
@@ -57,10 +57,13 @@ export default class OSEVRScene extends DCL.ScriptableScene {
     }, 100);
 
     //temp for test
-    store.dispatch(addElement({ id: 'element1', relationships: { built_from: ['element2', 'element3', 'element4'], built_in: [] } }));
-    store.dispatch(addElement({ id: 'element2', relationships: { built_from: [], built_in: ['element1'] } }));
-    store.dispatch(addElement({ id: 'element3', relationships: { built_from: [], built_in: ['element1'] } }));
-    store.dispatch(addElement({ id: 'element4', relationships: { built_from: [], built_in: ['element1'] } }));
+    store.dispatch(addElementActionCreator({ id: 'element1', relationships: { built_from: [], built_in: [] } }));
+    store.dispatch(addElementActionCreator({ id: 'element2', relationships: { built_from: [], built_in: [] } }));
+    store.dispatch(addElementActionCreator({ id: 'element3', relationships: { built_from: [], built_in: [] } }));
+    store.dispatch(addElementActionCreator({ id: 'element4', relationships: { built_from: [], built_in: [] } }));
+    store.dispatch(addRelationshipActionCreator({ source: 'element2', target: 'element1', type: 'built_in' }));
+    store.dispatch(addRelationshipActionCreator({ source: 'element3', target: 'element1', type: 'built_in' }));
+    store.dispatch(addRelationshipActionCreator({ source: 'element4', target: 'element1', type: 'built_in' }));
   }
 
   public async render() {
@@ -131,9 +134,9 @@ export default class OSEVRScene extends DCL.ScriptableScene {
 
   // Callbacks
   private treeCB = (id: string) => {
-    console.log(id);
-    // const newID = id +`1`;
-    // store.dispatch(addElement({ newID, relationships: { built_from: [], built_in: ['element1'] } }));
+    console.log(id + `clicked!`);
+    store.dispatch(addElementActionCreator({ id: 'newID', relationships: { built_from: [], built_in: [] } }));
+    store.dispatch(addRelationshipActionCreator({ source: 'id', target: 'newID', type: 'built_from' }));
   }
 
   // Properties
