@@ -1,21 +1,23 @@
 import * as DCL from 'decentraland-api'
 import { Pedestal } from "./src/components/Pedestal";
 import { Tree } from "src/components/Tree";
-import { createStore } from 'redux'
 //import { parcelDisplacement } from './src/utils'
-import { addElementActionCreator, addRelationshipActionCreator, rootReducer } from 'oset';
+import { createTree, Model } from 'oset';
 import { AircraftModel, AircraftState, FollowTrackController } from 'simkit';
 
-const store = createStore(rootReducer);
-
-export interface DynamicState {
-  ac: AircraftState
+export interface State {
+  ac: AircraftState;
+  mut: number; // model updated toggle
   sbs: number;
 }
 
 export default class OSEVRScene extends DCL.ScriptableScene {
-  public state: DynamicState;
-  private unsubscribe: () => void
+  public state: State;
+
+  // Properties
+  private ac: AircraftModel;
+  private ftc: FollowTrackController;
+  private model: Model;
 
   constructor(props: any) {
     super(props);
@@ -29,6 +31,7 @@ export default class OSEVRScene extends DCL.ScriptableScene {
         ydot: -2,
         phidot: 0
       },
+      mut: 3,
       sbs: 0
     }
 
@@ -37,9 +40,7 @@ export default class OSEVRScene extends DCL.ScriptableScene {
     this.ftc = new FollowTrackController(1, 5);
     this.ftc.setTrack({ x: 10, y: -20 }, { x: 10, y: -30 });
 
-    this.unsubscribe = store.subscribe(() => {
-      this.forceUpdate();
-    });
+    this.model = new Model();
   }
 
   public async sceneDidMount() {
@@ -56,19 +57,17 @@ export default class OSEVRScene extends DCL.ScriptableScene {
       this.setState({ ac: this.ac.getState() });
     }, 100);
 
-    //temp for test
-    store.dispatch(addElementActionCreator({ id: 'element1', relationships: { built_from: [], built_in: [] } }));
-    store.dispatch(addElementActionCreator({ id: 'element2', relationships: { built_from: [], built_in: [] } }));
-    store.dispatch(addElementActionCreator({ id: 'element3', relationships: { built_from: [], built_in: [] } }));
-    store.dispatch(addElementActionCreator({ id: 'element4', relationships: { built_from: [], built_in: [] } }));
-    store.dispatch(addRelationshipActionCreator({ source: 'element2', target: 'element1', type: 'built_in' }));
-    store.dispatch(addRelationshipActionCreator({ source: 'element3', target: 'element1', type: 'built_in' }));
-    store.dispatch(addRelationshipActionCreator({ source: 'element4', target: 'element1', type: 'built_in' }));
+    // experimental oset integration
+    this.model.addElement(Model.createElement('element1'));
+    this.model.addElement(Model.createElement('element2'));
+    this.model.addRelationship({
+      source: 'element1',
+      target: 'element2',
+      type: 'built_from'
+    });
   }
 
   public async render() {
-    const state = store.getState();
-
     return (
       <scene position={{ x: 5, y: 0, z: 5 }}>
         <gltf-model
@@ -122,24 +121,22 @@ export default class OSEVRScene extends DCL.ScriptableScene {
           colour={'#15a83f'}
           scale={0.5}
           onClick={this.treeCB}
-          elements={state.model.elements}
+          tree={createTree(this.model.relationships(), 'element1', 'built_from')}
         />
       </scene>
     );
   }
 
-  public async sceneWillUnmount() {
-    this.unsubscribe();
-  }
-
   // Callbacks
   private treeCB = (id: string) => {
-    console.log(id + `clicked!`);
-    store.dispatch(addElementActionCreator({ id: 'newID', relationships: { built_from: [], built_in: [] } }));
-    store.dispatch(addRelationshipActionCreator({ source: 'id', target: 'newID', type: 'built_from' }));
-  }
-
-  // Properties
-  private ac: AircraftModel;
-  private ftc: FollowTrackController;
+    console.log('Hello:' + id);
+    const newID = `element` + this.state.mut;
+    this.model.addElement(Model.createElement(newID));
+    this.model.addRelationship({
+      source: 'element1',
+      target: newID,
+      type: 'built_from'
+    });
+    this.setState({ mut: this.state.mut + 1 });
+  };
 }
