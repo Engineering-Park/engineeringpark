@@ -1,13 +1,13 @@
 {
   "display": {
-    "title": "interactive-text",
-    "favicon": "favicon_asset"
+    "title": "Engineering Park",
+    "favicon": "assets/favicon"
   },
   "contact": {
-    "name": "author-name",
-    "email": ""
+    "name": "Tristan Martindale",
+    "email": "info@madwabit.net"
   },
-  "owner": "",
+  "owner": "0xcD2234f134Ed04F64e3f46F5864E3E8324a0B450",
   "scene": {
     "parcels": ["65,38"],
     "base": "65,38"
