@@ -3,23 +3,33 @@ import addGltfShape from "./addGltfShape";
 // Create a parent entity for the scene
 const _scene = new Entity("_scene");
 engine.addEntity(_scene);
-const transform = new Transform({
-  position: new Vector3(8, 0, 8),
-  rotation: new Quaternion(0, 0, 0, 1),
-  scale: new Vector3(1, 1, 1)
-});
-_scene.addComponentOrReplace(transform);
 
 addGltfShape({
   parent: _scene,
   model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
   name: "FloorBase",
-  position: new Vector3(8, 0, 8),
+  position: new Vector3(16, 0, 16),
   scale: new Vector3(2, 1, 2)
 });
 
 addGltfShape({
   parent: _scene,
   model: "ConstructionSign_01/ConstructionSign_01.glb",
-  name: "UnderConstructionSign"
+  name: "UnderConstructionSign",
+  position: new Vector3(8, 0, 8)
+});
+
+addGltfShape({
+  parent: _scene,
+  model: "Bench_01/Bench_01.glb",
+  name: "Bench",
+  position: new Vector3(24, 0, 24)
+});
+
+addGltfShape({
+  parent: _scene,
+  model: "Bicycle_02/Bicycle_02.glb",
+  name: "Bicycle",
+  position: new Vector3(24, 0, 23.5),
+  rotation: new Quaternion(0.1, 0, 0, 1)
 });

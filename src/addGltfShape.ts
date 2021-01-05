@@ -27,4 +27,6 @@ export default function addGltfShape({
   gltfShape.isPointerBlocker = true;
   gltfShape.visible = true;
   entity.addComponentOrReplace(gltfShape);
+
+  return entity;
 }
