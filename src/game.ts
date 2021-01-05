@@ -1,3 +1,5 @@
+import addGltfShape from "./addGltfShape";
+
 // Create a parent entity for the scene
 const _scene = new Entity("_scene");
 engine.addEntity(_scene);
@@ -19,3 +21,10 @@ gltfShape.withCollisions = true;
 gltfShape.isPointerBlocker = true;
 gltfShape.visible = true;
 entity.addComponentOrReplace(gltfShape);
+
+addGltfShape({
+  parent: _scene,
+  model: "ConstructionSign_01/ConstructionSign_01.glb",
+  name: "underConstructionSign",
+  position: new Vector3(0, 0, 0)
+});
