@@ -10,21 +10,16 @@ const transform = new Transform({
 });
 _scene.addComponentOrReplace(transform);
 
-// Add the floor
-const entity = new Entity("entity");
-engine.addEntity(entity);
-entity.setParent(_scene);
-const gltfShape = new GLTFShape(
-  "models/FloorBaseGrass_01/FloorBaseGrass_01.glb"
-);
-gltfShape.withCollisions = true;
-gltfShape.isPointerBlocker = true;
-gltfShape.visible = true;
-entity.addComponentOrReplace(gltfShape);
+addGltfShape({
+  parent: _scene,
+  model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
+  name: "FloorBase",
+  position: new Vector3(8, 0, 8),
+  scale: new Vector3(2, 1, 2)
+});
 
 addGltfShape({
   parent: _scene,
   model: "ConstructionSign_01/ConstructionSign_01.glb",
-  name: "underConstructionSign",
-  position: new Vector3(0, 0, 0)
+  name: "UnderConstructionSign"
 });
