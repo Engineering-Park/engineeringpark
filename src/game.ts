@@ -34,10 +34,11 @@ addGltfShape({
   rotation: new Quaternion(0.1, 0, 0, 1)
 });
 
-addGltfShape({
+const aircraft = addGltfShape({
   parent: _scene,
   model: "airplane.glb",
   name: "Airplane",
   position: new Vector3(8, 1, 24),
-  scale: new Vector3(0.25, 0.25, 0.25)
+  scale: new Vector3(0.25, 0.25, 0.25),
+  attribution: "CC Attribution: MaX3Dd"
 });
