@@ -1,3 +1,4 @@
+import addAttribution from "./addAttribution";
 import addGltfShape from "./addGltfShape";
 
 // Create a parent entity for the scene
@@ -39,6 +40,12 @@ const aircraft = addGltfShape({
   model: "airplane.glb",
   name: "Airplane",
   position: new Vector3(8, 1, 24),
-  scale: new Vector3(0.25, 0.25, 0.25),
-  attribution: "CC Attribution: MaX3Dd"
+  scale: new Vector3(0.25, 0.25, 0.25)
+});
+
+addAttribution({
+  entity: aircraft,
+  text: "CC Attribution: MaX3Dd",
+  position: new Vector3(0, 0, -2),
+  rotation: Quaternion.Euler(0, -90, 0)
 });
