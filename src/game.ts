@@ -1,5 +1,6 @@
 import addAttribution from "./addAttribution";
 import addGltfShape from "./addGltfShape";
+import FlightSystem from "./FlightSystem";
 
 // Create a parent entity for the scene
 const _scene = new Entity("_scene");
@@ -49,3 +50,5 @@ addAttribution({
   position: new Vector3(0, 0, -2),
   rotation: Quaternion.Euler(0, -90, 0)
 });
+
+engine.addSystem(new FlightSystem(aircraft, 0.5, 3));
