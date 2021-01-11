@@ -77,3 +77,10 @@ const train = addGltfShape({
   position: new Vector3(16, 0.1, 16),
   scale: new Vector3(0.25, 0.25, 0.25)
 });
+
+addAttribution({
+  entity: train,
+  text: "CC Attribution: Spark",
+  position: new Vector3(0, 2, 0),
+  rotation: Quaternion.Euler(0, -90, 0)
+});
