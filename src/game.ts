@@ -40,7 +40,7 @@ const aircraft = addGltfShape({
   parent: _scene,
   model: "airplane.glb",
   name: "Airplane",
-  position: new Vector3(8, 1, 24),
+  position: new Vector3(11, 1, 24),
   scale: new Vector3(0.25, 0.25, 0.25)
 });
 
@@ -52,3 +52,20 @@ addAttribution({
 });
 
 engine.addSystem(new FlightSystem(aircraft, 0.5, 3));
+
+const parachute = addGltfShape({
+  parent: _scene,
+  model: "parachute.glb",
+  name: "Parachute",
+  position: new Vector3(27, 1, 8),
+  scale: new Vector3(0.25, 0.25, 0.25)
+});
+
+addAttribution({
+  entity: parachute,
+  text: "CC-BY: Poly by Google",
+  position: new Vector3(0, 0, -2),
+  rotation: Quaternion.Euler(0, -90, 0)
+});
+
+engine.addSystem(new FlightSystem(parachute, -0.5, 3));
