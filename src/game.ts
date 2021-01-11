@@ -69,3 +69,11 @@ addAttribution({
 });
 
 engine.addSystem(new FlightSystem(parachute, -0.5, 3));
+
+const train = addGltfShape({
+  parent: _scene,
+  model: "train.glb",
+  name: "Train",
+  position: new Vector3(16, 0.1, 16),
+  scale: new Vector3(0.25, 0.25, 0.25)
+});
