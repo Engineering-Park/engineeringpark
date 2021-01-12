@@ -2,7 +2,7 @@ import utils from "../node_modules/decentraland-ecs-utils/index";
 
 export interface Args {
   parent: Entity; // the parent of the video entity
-  video: string; // the relative path to the video
+  video: string; // the relative path to the video file
   position?: Vector3; // the position relative to the parent
   rotation?: Quaternion; // the rotation relative to the parent
   scale?: Vector3; // the scale relative to the parent

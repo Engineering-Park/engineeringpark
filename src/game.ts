@@ -1,5 +1,6 @@
 import addAttribution from "./addAttribution";
 import addGltfShape from "./addGltfShape";
+import addSound from "./addSound";
 import addVideo from "./addVideo";
 import FlightSystem from "./FlightSystem";
 
@@ -78,6 +79,8 @@ const train = addGltfShape({
   position: new Vector3(16, 0.1, 16),
   scale: new Vector3(0.25, 0.25, 0.25)
 });
+
+addSound({ entity: train, sound: "train.mp3" });
 
 addAttribution({
   entity: train,
