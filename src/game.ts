@@ -1,5 +1,6 @@
 import addAttribution from "./addAttribution";
 import addGltfShape from "./addGltfShape";
+import addVideo from "./addVideo";
 import FlightSystem from "./FlightSystem";
 
 // Create a parent entity for the scene
@@ -83,4 +84,12 @@ addAttribution({
   text: "CC Attribution: Spark",
   position: new Vector3(0, 2, 0),
   rotation: Quaternion.Euler(0, -90, 0)
+});
+
+addVideo({
+  parent: _scene,
+  video: "Why.mp4",
+  position: new Vector3(8, 3, 8),
+  rotation: Quaternion.Euler(-15, -135, -10),
+  scale: new Vector3(3, (3 * 360) / 640, 1)
 });
