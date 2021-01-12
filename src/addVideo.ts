@@ -1,3 +1,5 @@
+import utils from "../node_modules/decentraland-ecs-utils/index";
+
 export interface Args {
   parent: Entity; // the parent of the video entity
   video: string; // the relative path to the video
@@ -6,7 +8,7 @@ export interface Args {
   scale?: Vector3; // the scale relative to the parent
 }
 
-export default function addGltfShape({
+export default function addVideo({
   parent,
   video,
   position = new Vector3(0, 0, 0),
@@ -25,10 +27,34 @@ export default function addGltfShape({
 
   screen.addComponent(new PlaneShape());
   screen.addComponent(material);
+  screen.addComponent(new Billboard(false, true, false));
   screen.addComponent(
     new OnPointerDown(() => {
-      videoTexture.playing = !videoTexture.playing;
+      videoTexture.reset();
+      videoTexture.play();
     })
+  );
+
+  let triggerBox = new utils.TriggerBoxShape(
+    new Vector3(12, 0, 12),
+    Vector3.Zero()
+  );
+  screen.addComponent(
+    new utils.TriggerComponent(
+      triggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      () => {
+        //onCameraEnter
+        videoTexture.play();
+      },
+      () => {
+        //onCameraExit
+        videoTexture.pause();
+      }
+    )
   );
 
   screen.setParent(parent);
