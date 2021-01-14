@@ -53,6 +53,8 @@ addAttribution({
   rotation: Quaternion.Euler(0, -90, 0)
 });
 
+addSound({ entity: aircraft, sound: "aircraft.mp3" });
+
 engine.addSystem(new FlightSystem(aircraft, 0.5, 3));
 
 const parachute = addGltfShape({
@@ -69,6 +71,8 @@ addAttribution({
   position: new Vector3(0, 0, -2),
   rotation: Quaternion.Euler(0, -90, 0)
 });
+
+addSound({ entity: parachute, sound: "parachute.mp3" });
 
 engine.addSystem(new FlightSystem(parachute, -0.5, 3));
 
