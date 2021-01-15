@@ -21,7 +21,7 @@ export default function addLayout({
   const layoutEntity = new Entity("layout");
   layoutEntity.addComponentOrReplace(
     new Transform({
-      position: new Vector3(-layout.width / 2, layout.height, 0),
+      position: new Vector3(-layout.width / 2, layout.height + 1, 0),
       rotation: Quaternion.Euler(90, 0, 0)
     })
   );

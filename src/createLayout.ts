@@ -50,95 +50,58 @@ export default function createLayout() {
   };
 }
 
-const layoutProperties: LayoutProperties = {
-  nodeWidth: 2,
-  nodeHeight: 2,
-  nodeOrientation: Orientation.horizontal,
-  horizontalSpacing: 2,
-  verticalSpacing: 2,
-  layoutOrientation: Orientation.vertical
-};
-
 const shapes = () => [
   {
-    name: "Element 1",
+    name: "Data",
     width: 2,
     height: 2,
     position: { x: 1, y: 13 },
     rotation: 0
   },
   {
-    name: "Element 2",
+    name: "Hardware",
     width: 2,
     height: 2,
     position: { x: 5, y: 13 },
     rotation: 0
   },
   {
-    name: "Element 3",
+    name: "Subsystem",
     width: 2,
     height: 2,
     position: { x: 3, y: 9 },
     rotation: 0
   },
   {
-    name: "Element 4",
-    width: 2,
-    height: 2,
-    position: { x: 9, y: 9 },
-    rotation: 0
-  },
-  {
-    name: "Element 5",
+    name: "System",
     width: 2,
     height: 2,
     position: { x: 6, y: 5 },
     rotation: 0
   },
   {
-    name: "Element 6",
-    width: 2,
-    height: 2,
-    position: { x: 13, y: 5 },
-    rotation: 0
-  },
-  {
-    name: "Element 7",
+    name: "Software",
     width: 2,
     height: 2,
     position: { x: 17, y: 13 },
     rotation: 0
   },
   {
-    name: "Element 8",
-    width: 2,
-    height: 2,
-    position: { x: 21, y: 13 },
-    rotation: 0
-  },
-  {
-    name: "Element 9",
+    name: "Service",
     width: 2,
     height: 2,
     position: { x: 19, y: 9 },
     rotation: 0
   },
   {
-    name: "Element 10",
-    width: 2,
-    height: 2,
-    position: { x: 25, y: 9 },
-    rotation: 0
-  },
-  {
-    name: "Element 11",
+    name: "System of Systems",
     width: 2,
     height: 2,
     position: { x: 22, y: 5 },
     rotation: 0
   },
   {
-    name: "Element 12",
+    name: "System of Interest",
     width: 2,
     height: 2,
     position: { x: 14, y: 1 },
