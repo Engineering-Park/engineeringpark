@@ -1,10 +1,9 @@
 import addAttribution from "./addAttribution";
 import addGltfShape from "./addGltfShape";
-import addLayout from "./addLayout";
 import addSound from "./addSound";
 import addVideo from "./addVideo";
-import createLayout from "./createLayout";
 import FlightSystem from "./FlightSystem";
+import createStaticSystemStructureScene from "./scenes/createStaticSystemStructureScene";
 
 // Create a parent entity for the scene
 const _scene = new Entity("_scene");
@@ -103,10 +102,7 @@ addVideo({
   scale: new Vector3(3, (3 * 360) / 640, 1)
 });
 
-addLayout({
+createStaticSystemStructureScene({
   parent: _scene,
-  layout: createLayout(),
-  position: new Vector3(32, 0, 32),
-  rotation: Quaternion.Euler(0, 0, 0),
-  scale: new Vector3(0.5, 0.5, 0.5)
+  location: { east: 68, north: 47 }
 });
