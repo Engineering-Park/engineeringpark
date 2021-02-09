@@ -1,4 +1,4 @@
-import utils from "../node_modules/decentraland-ecs-utils/index";
+import utils from "../../node_modules/decentraland-ecs-utils/index";
 
 export interface Args {
   parent: Entity; // the parent of the video entity

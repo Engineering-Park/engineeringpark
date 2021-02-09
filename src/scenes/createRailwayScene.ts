@@ -1,5 +1,5 @@
 import addAttribution from "../entities/addAttribution";
-import addSound from "../entities/addSound";
+import addSound from "../components/addSound";
 import createGltfShape from "../entities/createGltfShape";
 import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
 import { Location } from "../utils/Location";

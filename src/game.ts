@@ -1,5 +1,5 @@
-import addGltfShape from "./addGltfShape";
-import addVideo from "./addVideo";
+import addVideo from "./components/addVideo";
+import createGltfShape from "./entities/createGltfShape";
 import createAircraftScene from "./scenes/createAircraftScene";
 import createBicycleScene from "./scenes/createBicycleScene";
 import createParachuteScene from "./scenes/createParachuteScene";
@@ -10,13 +10,12 @@ import createStaticSystemStructureScene from "./scenes/createStaticSystemStructu
 const _scene = new Entity("_scene");
 engine.addEntity(_scene);
 
-addGltfShape({
-  parent: _scene,
+createGltfShape({
   model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
   name: "FloorBase",
   position: new Vector3(16, 0, 16),
   scale: new Vector3(2, 1, 2)
-});
+}).setParent(_scene);
 
 addVideo({
   parent: _scene,

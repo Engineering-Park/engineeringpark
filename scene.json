@@ -9,10 +9,7 @@
   },
   "owner": "0xcD2234f134Ed04F64e3f46F5864E3E8324a0B450",
   "scene": {
-    "parcels": [
-      "68,48", "69,48",
-      "68,47", "69,47"
-    ],
+    "parcels": ["68,48", "69,48", "68,47", "69,47"],
     "base": "68,47"
   },
   "communications": {
@@ -33,14 +30,14 @@
       "name": "spawn1",
       "default": true,
       "position": {
-        "x": 0,
+        "x": 16,
         "y": 0,
-        "z": 0
+        "z": 30
       },
       "cameraTarget": {
-        "x": 8,
+        "x": 16,
         "y": 1,
-        "z": 8
+        "z": 16
       }
     }
   ]

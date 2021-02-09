@@ -1,5 +1,5 @@
 import addAttribution from "../entities/addAttribution";
-import addSound from "../entities/addSound";
+import addSound from "../components/addSound";
 import createGltfShape from "../entities/createGltfShape";
 import FlightSystem from "../systems/FlightSystem";
 import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
