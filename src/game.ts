@@ -1,12 +1,10 @@
 import addGltfShape from "./addGltfShape";
 import addVideo from "./addVideo";
-import addAttribution from "./entities/addAttribution";
-import addSound from "./entities/addSound";
 import createAircraftScene from "./scenes/createAircraftScene";
+import createBicycleScene from "./scenes/createBicycleScene";
 import createParachuteScene from "./scenes/createParachuteScene";
 import createRailwayScene from "./scenes/createRailwayScene";
 import createStaticSystemStructureScene from "./scenes/createStaticSystemStructureScene";
-import FlightSystem from "./systems/FlightSystem";
 
 // Create a parent entity for the scene
 const _scene = new Entity("_scene");
@@ -27,21 +25,6 @@ addGltfShape({
   position: new Vector3(8, 0, 8)
 });
 
-addGltfShape({
-  parent: _scene,
-  model: "Bench_01/Bench_01.glb",
-  name: "Bench",
-  position: new Vector3(24, 0, 24)
-});
-
-addGltfShape({
-  parent: _scene,
-  model: "Bicycle_02/Bicycle_02.glb",
-  name: "Bicycle",
-  position: new Vector3(24, 0, 23.5),
-  rotation: new Quaternion(0.1, 0, 0, 1)
-});
-
 addVideo({
   parent: _scene,
   video: "Why.mp4",
@@ -49,6 +32,10 @@ addVideo({
   rotation: Quaternion.Euler(-15, -135, -10),
   scale: new Vector3(3, (3 * 360) / 640, 1)
 });
+
+createBicycleScene({
+  location: { east: 68, north: 47 }
+}).setParent(_scene);
 
 createAircraftScene({
   location: { east: 68, north: 47 }
