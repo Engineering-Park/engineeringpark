@@ -1,7 +1,6 @@
 import { Layout, Shape } from "../se-toolkit/createStaticModelLayout";
 
 export interface Args {
-  parent: Entity; // the parent of the entity
   layout: Layout; // the layout to add
   position?: Vector3; // the position relative to the parent
   rotation?: Quaternion; // the rotation relative to the parent
@@ -9,12 +8,11 @@ export interface Args {
 }
 
 export default function createLayout({
-  parent,
   layout,
   position = new Vector3(0, 0, 0),
   rotation = new Quaternion(0, 0, 0, 1),
   scale = new Vector3(1, 1, 1)
-}: Args) {
+}: Args): Entity {
   const entity = new Entity("layout_anchor");
   entity.addComponentOrReplace(new Transform({ position, rotation, scale }));
 
@@ -25,15 +23,14 @@ export default function createLayout({
       rotation: Quaternion.Euler(90, 0, 0)
     })
   );
-
-  layout.shapes.forEach(shape => addShape(layoutEntity, shape));
-
   layoutEntity.setParent(entity);
-  entity.setParent(parent);
+
+  layout.shapes.forEach(shape => createShape(shape).setParent(layoutEntity));
+
   return entity;
 }
 
-const addShape = (parent: Entity, shape: Shape) => {
+const createShape = (shape: Shape): Entity => {
   const entity = new Entity(shape.name);
   entity.addComponentOrReplace(
     new Transform({
@@ -46,13 +43,12 @@ const addShape = (parent: Entity, shape: Shape) => {
   const box = new BoxShape();
   entity.addComponentOrReplace(box);
 
-  addName(entity, shape);
+  createName(shape).setParent(entity);
 
-  entity.setParent(parent);
   return entity;
 };
 
-const addName = (parent: Entity, shape: Shape) => {
+const createName = (shape: Shape): Entity => {
   const entity = new Entity(shape.name);
   entity.addComponentOrReplace(
     new Transform({
@@ -67,6 +63,5 @@ const addName = (parent: Entity, shape: Shape) => {
   text.color = Color3.Black();
   entity.addComponent(text);
 
-  entity.setParent(parent);
   return entity;
 };

@@ -103,6 +103,5 @@ addVideo({
 });
 
 createStaticSystemStructureScene({
-  parent: _scene,
   location: { east: 68, north: 47 }
-});
+}).setParent(_scene);
