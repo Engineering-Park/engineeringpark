@@ -3,6 +3,7 @@ import addVideo from "./addVideo";
 import addAttribution from "./components/addAttribution";
 import addSound from "./components/addSound";
 import FlightSystem from "./FlightSystem";
+import createParachuteScene from "./scenes/createParachuteScene";
 import createRailwayScene from "./scenes/createRailwayScene";
 import createStaticSystemStructureScene from "./scenes/createStaticSystemStructureScene";
 
@@ -59,25 +60,6 @@ addSound({ entity: aircraft, sound: "aircraft.mp3" });
 
 engine.addSystem(new FlightSystem(aircraft, 0.5, 3));
 
-const parachute = addGltfShape({
-  parent: _scene,
-  model: "parachute.glb",
-  name: "Parachute",
-  position: new Vector3(27, 1, 8),
-  scale: new Vector3(0.25, 0.25, 0.25)
-});
-
-addAttribution({
-  entity: parachute,
-  text: "CC-BY: Poly by Google",
-  position: new Vector3(0, 0, -2),
-  rotation: Quaternion.Euler(0, -90, 0)
-});
-
-addSound({ entity: parachute, sound: "parachute.mp3" });
-
-engine.addSystem(new FlightSystem(parachute, -0.5, 3));
-
 addVideo({
   parent: _scene,
   video: "Why.mp4",
@@ -85,6 +67,10 @@ addVideo({
   rotation: Quaternion.Euler(-15, -135, -10),
   scale: new Vector3(3, (3 * 360) / 640, 1)
 });
+
+createParachuteScene({
+  location: { east: 68, north: 47 }
+}).setParent(_scene);
 
 createRailwayScene({
   location: { east: 68, north: 47 }
