@@ -18,13 +18,6 @@ addGltfShape({
   scale: new Vector3(2, 1, 2)
 });
 
-addGltfShape({
-  parent: _scene,
-  model: "ConstructionSign_01/ConstructionSign_01.glb",
-  name: "UnderConstructionSign",
-  position: new Vector3(8, 0, 8)
-});
-
 addVideo({
   parent: _scene,
   video: "Why.mp4",
