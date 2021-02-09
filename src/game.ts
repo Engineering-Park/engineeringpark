@@ -2,6 +2,7 @@ import addGltfShape from "./addGltfShape";
 import addVideo from "./addVideo";
 import addAttribution from "./entities/addAttribution";
 import addSound from "./entities/addSound";
+import createAircraftScene from "./scenes/createAircraftScene";
 import createParachuteScene from "./scenes/createParachuteScene";
 import createRailwayScene from "./scenes/createRailwayScene";
 import createStaticSystemStructureScene from "./scenes/createStaticSystemStructureScene";
@@ -41,25 +42,6 @@ addGltfShape({
   rotation: new Quaternion(0.1, 0, 0, 1)
 });
 
-const aircraft = addGltfShape({
-  parent: _scene,
-  model: "airplane.glb",
-  name: "Airplane",
-  position: new Vector3(11, 1, 24),
-  scale: new Vector3(0.25, 0.25, 0.25)
-});
-
-addAttribution({
-  entity: aircraft,
-  text: "CC Attribution: MaX3Dd",
-  position: new Vector3(0, 0, -2),
-  rotation: Quaternion.Euler(0, -90, 0)
-});
-
-addSound({ entity: aircraft, sound: "aircraft.mp3" });
-
-engine.addSystem(new FlightSystem(aircraft, 0.5, 3));
-
 addVideo({
   parent: _scene,
   video: "Why.mp4",
@@ -67,6 +49,10 @@ addVideo({
   rotation: Quaternion.Euler(-15, -135, -10),
   scale: new Vector3(3, (3 * 360) / 640, 1)
 });
+
+createAircraftScene({
+  location: { east: 68, north: 47 }
+}).setParent(_scene);
 
 createParachuteScene({
   location: { east: 68, north: 47 }

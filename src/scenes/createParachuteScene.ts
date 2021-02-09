@@ -12,7 +12,7 @@ export interface Args {
 export default function createParachuteScene({ location }: Args): Entity {
   const origin = getCoordinatesRelativeToBase(location);
 
-  const scene = createGltfShape({
+  const parachute = createGltfShape({
     model: "parachute.glb",
     name: "Parachute",
     position: new Vector3(origin.x + 8, 1, origin.y + 8),
@@ -20,15 +20,15 @@ export default function createParachuteScene({ location }: Args): Entity {
   });
 
   addAttribution({
-    entity: scene,
+    entity: parachute,
     text: "CC-BY: Poly by Google",
     position: new Vector3(0, 0, -2),
     rotation: Quaternion.Euler(0, -90, 0)
   });
 
-  addSound({ entity: scene, sound: "parachute.mp3" });
+  addSound({ entity: parachute, sound: "parachute.mp3" });
 
-  engine.addSystem(new FlightSystem(scene, -0.5, 3));
+  engine.addSystem(new FlightSystem(parachute, -0.5, 3));
 
-  return scene;
+  return parachute;
 }

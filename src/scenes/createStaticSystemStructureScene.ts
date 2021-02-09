@@ -12,12 +12,12 @@ export default function createStaticSystemStructureScene({
 }: Args): Entity {
   const origin = getCoordinatesRelativeToBase(location);
 
-  const scene = createLayout({
+  const layout = createLayout({
     layout: createStaticModelLayout(),
     position: new Vector3(origin.x + 8, 0, origin.y + 8),
     rotation: Quaternion.Euler(0, 0, 0),
     scale: new Vector3(0.5, 0.5, 0.5)
   });
 
-  return scene;
+  return layout;
 }
