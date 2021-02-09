@@ -1,4 +1,4 @@
-import { Layout, Shape } from "./createLayout";
+import { Layout, Shape } from "../se-toolkit/createStaticModelLayout";
 
 export interface Args {
   parent: Entity; // the parent of the entity
@@ -8,7 +8,7 @@ export interface Args {
   scale?: Vector3; // the scale relative to the parent
 }
 
-export default function addLayout({
+export default function createLayout({
   parent,
   layout,
   position = new Vector3(0, 0, 0),

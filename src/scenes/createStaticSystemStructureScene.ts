@@ -1,5 +1,5 @@
-import addLayout from "../addLayout";
-import createLayout from "../createLayout";
+import createLayout from "../components/createLayout";
+import createStaticModelLayout from "../se-toolkit/createStaticModelLayout";
 import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
 import { Location } from "../utils/Location";
 
@@ -14,9 +14,9 @@ export default function createStaticSystemStructureScene({
 }: Args) {
   const origin = getCoordinatesRelativeToBase(location);
 
-  addLayout({
+  createLayout({
     parent,
-    layout: createLayout(),
+    layout: createStaticModelLayout(),
     position: new Vector3(origin.x + 8, 0, origin.y + 8),
     rotation: Quaternion.Euler(0, 0, 0),
     scale: new Vector3(0.5, 0.5, 0.5)

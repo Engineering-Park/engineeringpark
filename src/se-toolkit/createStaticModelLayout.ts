@@ -40,7 +40,7 @@ export interface Position {
   y: number;
 }
 
-export default function createLayout() {
+export default function createStaticModelLayout() {
   return {
     shapes: shapes(),
     connectors: connectors(),
