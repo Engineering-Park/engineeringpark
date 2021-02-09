@@ -1,8 +1,9 @@
-import addAttribution from "./addAttribution";
 import addGltfShape from "./addGltfShape";
-import addSound from "./addSound";
 import addVideo from "./addVideo";
+import addAttribution from "./components/addAttribution";
+import addSound from "./components/addSound";
 import FlightSystem from "./FlightSystem";
+import createRailwayScene from "./scenes/createRailwayScene";
 import createStaticSystemStructureScene from "./scenes/createStaticSystemStructureScene";
 
 // Create a parent entity for the scene
@@ -77,23 +78,6 @@ addSound({ entity: parachute, sound: "parachute.mp3" });
 
 engine.addSystem(new FlightSystem(parachute, -0.5, 3));
 
-const train = addGltfShape({
-  parent: _scene,
-  model: "train.glb",
-  name: "Train",
-  position: new Vector3(16, 0.1, 16),
-  scale: new Vector3(0.25, 0.25, 0.25)
-});
-
-addSound({ entity: train, sound: "train.mp3" });
-
-addAttribution({
-  entity: train,
-  text: "CC Attribution: Spark",
-  position: new Vector3(0, 2, 0),
-  rotation: Quaternion.Euler(0, -90, 0)
-});
-
 addVideo({
   parent: _scene,
   video: "Why.mp4",
@@ -101,6 +85,10 @@ addVideo({
   rotation: Quaternion.Euler(-15, -135, -10),
   scale: new Vector3(3, (3 * 360) / 640, 1)
 });
+
+createRailwayScene({
+  location: { east: 68, north: 47 }
+}).setParent(_scene);
 
 createStaticSystemStructureScene({
   location: { east: 68, north: 47 }

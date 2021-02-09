@@ -1,4 +1,4 @@
-import utils from "../node_modules/decentraland-ecs-utils/index";
+import utils from "../../node_modules/decentraland-ecs-utils/index";
 
 export interface Args {
   entity: Entity; // the entity to which to attach the attribution text
