@@ -1,4 +1,4 @@
-import createLayout from "../components/createLayout";
+import createLayout from "../entities/createLayout";
 import createStaticModelLayout from "../se-toolkit/createStaticModelLayout";
 import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
 import { Location } from "../utils/Location";

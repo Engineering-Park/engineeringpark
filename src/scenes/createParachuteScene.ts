@@ -1,7 +1,7 @@
-import addAttribution from "../components/addAttribution";
-import addSound from "../components/addSound";
-import createGltfShape from "../components/createGltfShape";
-import FlightSystem from "../FlightSystem";
+import addAttribution from "../entities/addAttribution";
+import addSound from "../entities/addSound";
+import createGltfShape from "../entities/createGltfShape";
+import FlightSystem from "../systems/FlightSystem";
 import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
 import { Location } from "../utils/Location";
 

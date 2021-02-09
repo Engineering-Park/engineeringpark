@@ -1,11 +1,11 @@
 import addGltfShape from "./addGltfShape";
 import addVideo from "./addVideo";
-import addAttribution from "./components/addAttribution";
-import addSound from "./components/addSound";
-import FlightSystem from "./FlightSystem";
+import addAttribution from "./entities/addAttribution";
+import addSound from "./entities/addSound";
 import createParachuteScene from "./scenes/createParachuteScene";
 import createRailwayScene from "./scenes/createRailwayScene";
 import createStaticSystemStructureScene from "./scenes/createStaticSystemStructureScene";
+import FlightSystem from "./systems/FlightSystem";
 
 // Create a parent entity for the scene
 const _scene = new Entity("_scene");
