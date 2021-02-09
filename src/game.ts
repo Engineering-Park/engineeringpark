@@ -26,15 +26,15 @@ addVideo({
 });
 
 createBicycleScene({
-  location: { east: 68, north: 47 }
+  location: { east: 69, north: 48 }
 }).setParent(_scene);
 
 createAircraftScene({
-  location: { east: 68, north: 47 }
+  location: { east: 68, north: 48 }
 }).setParent(_scene);
 
 createParachuteScene({
-  location: { east: 68, north: 47 }
+  location: { east: 69, north: 47 }
 }).setParent(_scene);
 
 createRailwayScene({
@@ -42,5 +42,5 @@ createRailwayScene({
 }).setParent(_scene);
 
 createStaticSystemStructureScene({
-  location: { east: 68, north: 47 }
+  location: { east: 69, north: 48 }
 }).setParent(_scene);

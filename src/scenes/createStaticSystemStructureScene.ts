@@ -21,13 +21,13 @@ export default function createStaticSystemStructureScene({
   createGltfShape({
     model: "ConstructionSign_01/ConstructionSign_01.glb",
     name: "UnderConstructionSign",
-    position: new Vector3(8, 0, 8),
+    position: new Vector3(0, 0, 0),
     rotation: Quaternion.Euler(0, 90, 0)
   }).setParent(scene);
 
   createLayout({
     layout: createStaticModelLayout(),
-    position: new Vector3(origin.x + 8, 0, origin.y + 8),
+    position: new Vector3(0, 0, 0),
     rotation: Quaternion.Euler(0, 180, 0),
     scale: new Vector3(0.5, 0.5, 0.5)
   }).setParent(scene);
