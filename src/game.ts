@@ -1,5 +1,6 @@
 import addVideo from "./components/addVideo";
 import createGltfShape from "./entities/createGltfShape";
+import createScene from "./entities/createScene";
 import createAircraftScene from "./scenes/createAircraftScene";
 import createBicycleScene from "./scenes/createBicycleScene";
 import createParachuteScene from "./scenes/createParachuteScene";
@@ -17,10 +18,17 @@ createGltfShape({
   scale: new Vector3(2, 1, 2)
 }).setParent(_scene);
 
+const videoScene = createScene({
+  name: "video_why",
+  location: { east: 69, north: 48 },
+  position: new Vector2(8, 8)
+});
+videoScene.setParent(_scene);
+
 addVideo({
-  parent: _scene,
+  parent: videoScene,
   video: "Why.mp4",
-  position: new Vector3(8, 3, 8),
+  position: new Vector3(0, 3, 0),
   rotation: Quaternion.Euler(-15, -135, -10),
   scale: new Vector3(3, (3 * 360) / 640, 1)
 });
