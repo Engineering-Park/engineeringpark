@@ -4,20 +4,29 @@ import createGltfShape from "../entities/createGltfShape";
 import FlightSystem from "../systems/FlightSystem";
 import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
 import { Location } from "../utils/Location";
+import createScene from "../entities/createScene";
 
 export interface Args {
+  name: string; // the name of the scene
   location: Location; // the location of the entity in the DCL LAND coordinate system
 }
 
-export default function createAircraftScene({ location }: Args): Entity {
-  const origin = getCoordinatesRelativeToBase(location);
+export default function createAircraftScene({ name, location }: Args): Entity {
+  const scene = createScene({ name, location });
+
+  createGltfShape({
+    model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
+    name: "FloorBase",
+    position: new Vector3(8, 0, 8)
+  }).setParent(scene);
 
   const aircraft = createGltfShape({
     model: "airplane.glb",
     name: "Airplane",
-    position: new Vector3(origin.x + 8, 1, origin.y + 8),
+    position: new Vector3(8, 1, 8),
     scale: new Vector3(0.25, 0.25, 0.25)
   });
+  aircraft.setParent(scene);
 
   addAttribution({
     entity: aircraft,
@@ -30,5 +39,5 @@ export default function createAircraftScene({ location }: Args): Entity {
 
   engine.addSystem(new FlightSystem(aircraft, 0.5, 3));
 
-  return aircraft;
+  return scene;
 }
