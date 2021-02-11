@@ -59,7 +59,7 @@ const createName = (shape: Shape): Entity => {
   );
 
   const text = new TextShape(shape.name);
-  text.fontSize = 2;
+  text.fontSize = 1;
   text.color = Color3.Black();
   entity.addComponent(text);
 

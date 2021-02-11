@@ -18,8 +18,8 @@ export default function createStaticSystemStructureScene({
 
   createLayout({
     layout: createStaticModelLayout(),
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 180, 0),
+    position: new Vector3(12, 0, 4),
+    rotation: Quaternion.Euler(0, 135, 0),
     scale: new Vector3(0.5, 0.5, 0.5)
   }).setParent(scene);
 

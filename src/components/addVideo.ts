@@ -36,7 +36,7 @@ export default function addVideo({
   );
 
   let triggerBox = new utils.TriggerBoxShape(
-    new Vector3(15, 0, 15),
+    new Vector3(29, 0, 29),
     Vector3.Zero()
   );
   screen.addComponent(

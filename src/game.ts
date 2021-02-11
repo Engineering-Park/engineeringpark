@@ -20,8 +20,7 @@ createGltfShape({
 
 const videoScene = createScene({
   name: "video_why",
-  location: { east: 69, north: 48 },
-  position: new Vector2(8, 8)
+  location: { east: 69, north: 48 }
 });
 videoScene.setParent(_scene);
 
@@ -38,6 +37,11 @@ createBicycleScene({
   location: { east: 69, north: 48 }
 }).setParent(_scene);
 
+createStaticSystemStructureScene({
+  name: "scene_sbs",
+  location: { east: 69, north: 48 }
+}).setParent(_scene);
+
 createAircraftScene({
   name: "scene_aircraft",
   location: { east: 68, north: 48 }
@@ -51,9 +55,4 @@ createParachuteScene({
 createRailwayScene({
   name: "scene_railway",
   location: { east: 68, north: 47 }
-}).setParent(_scene);
-
-createStaticSystemStructureScene({
-  name: "scene_sbs",
-  location: { east: 69, north: 48 }
 }).setParent(_scene);
