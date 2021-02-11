@@ -1,6 +1,7 @@
 import addVideo from "./components/addVideo";
 import createGltfShape from "./entities/createGltfShape";
 import createScene from "./entities/createScene";
+import createSign from "./entities/createSign";
 import createAircraftScene from "./scenes/createAircraftScene";
 import createBicycleScene from "./scenes/createBicycleScene";
 import createParachuteScene from "./scenes/createParachuteScene";
@@ -16,6 +17,10 @@ createGltfShape({
   name: "FloorBase",
   position: new Vector3(16, 0, 16),
   scale: new Vector3(2, 1, 2)
+}).setParent(_scene);
+
+createSign({
+  position: new Vector2(12, 16)
 }).setParent(_scene);
 
 const videoScene = createScene({
