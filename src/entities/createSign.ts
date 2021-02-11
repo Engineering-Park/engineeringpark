@@ -24,6 +24,10 @@ export default function createSign({
   const box = new BoxShape();
   shape.addComponentOrReplace(box);
 
+  const primaryColour = new Material();
+  primaryColour.albedoColor = Color3.FromHexString("#0d47a1");
+  shape.addComponent(primaryColour);
+
   shape.addComponent(
     new OnPointerDown(() => {
       openExternalURL("https://se-toolkit.app");
@@ -44,7 +48,7 @@ export default function createSign({
     "Systems Engineering Toolkit\n<i>se-toolkit.app</i>"
   );
   text.fontSize = 2;
-  text.color = Color3.Black();
+  text.color = Color3.White();
   textEntity.addComponent(text);
 
   shape.setParent(anchor);
