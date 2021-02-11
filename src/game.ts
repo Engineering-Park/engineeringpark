@@ -4,6 +4,7 @@ import createScene from "./entities/createScene";
 import createSign from "./entities/createSign";
 import createAircraftScene from "./scenes/createAircraftScene";
 import createBicycleScene from "./scenes/createBicycleScene";
+import createEntranceScene from "./scenes/createEntranceScene";
 import createParachuteScene from "./scenes/createParachuteScene";
 import createRailwayScene from "./scenes/createRailwayScene";
 import createStaticSystemStructureScene from "./scenes/createStaticSystemStructureScene";
@@ -11,6 +12,11 @@ import createStaticSystemStructureScene from "./scenes/createStaticSystemStructu
 // Create a parent entity for the scene
 const _scene = new Entity("_scene");
 engine.addEntity(_scene);
+
+createEntranceScene({
+  name: "scene_entrance",
+  location: { east: 68, north: 50 }
+}).setParent(_scene);
 
 createGltfShape({
   model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
