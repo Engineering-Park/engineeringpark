@@ -1,23 +1,22 @@
-import addAttribution from "../entities/addAttribution";
 import addSound from "../components/addSound";
+import addAttribution from "../entities/addAttribution";
 import createGltfShape from "../entities/createGltfShape";
+import createScene, { SceneArgs } from "../entities/createScene";
 import FlightSystem from "../systems/FlightSystem";
-import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
-import { Location } from "../utils/Location";
 
-export interface Args {
-  location: Location; // the location of the entity in the DCL LAND coordinate system
-}
-
-export default function createParachuteScene({ location }: Args): Entity {
-  const origin = getCoordinatesRelativeToBase(location);
+export default function createParachuteScene({
+  name,
+  location
+}: SceneArgs): Entity {
+  const scene = createScene({ name, location });
 
   const parachute = createGltfShape({
     model: "parachute.glb",
     name: "Parachute",
-    position: new Vector3(origin.x + 8, 1, origin.y + 8),
+    position: new Vector3(8, 1, 8),
     scale: new Vector3(0.25, 0.25, 0.25)
   });
+  parachute.setParent(scene);
 
   addAttribution({
     entity: parachute,
@@ -30,5 +29,5 @@ export default function createParachuteScene({ location }: Args): Entity {
 
   engine.addSystem(new FlightSystem(parachute, -0.5, 3));
 
-  return parachute;
+  return scene;
 }

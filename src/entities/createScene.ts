@@ -1,9 +1,11 @@
 import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
 import { Location } from "../utils/Location";
 
-export interface Args {
+export interface SceneArgs {
   name: string; // the name of the scene
   location: Location; // the location of the entity in the DCL LAND coordinate system
+}
+export interface Args extends SceneArgs {
   position?: Vector2; // the position in meters relative to the south west corner of the parcel where the scene is located
   heading?: number; // the rotation of the scene around its vertical axis in degrees (north = 0 degrees, east = 90 degrees, etc.)
 }

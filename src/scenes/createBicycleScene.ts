@@ -1,18 +1,11 @@
 import createGltfShape from "../entities/createGltfShape";
-import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
-import { Location } from "../utils/Location";
+import createScene, { SceneArgs } from "../entities/createScene";
 
-export interface Args {
-  location: Location; // the location of the entity in the DCL LAND coordinate system
-}
-
-export default function createBicycleScene({ location }: Args): Entity {
-  const origin = getCoordinatesRelativeToBase(location);
-
-  const scene = new Entity("bicycle_scene");
-  scene.addComponentOrReplace(
-    new Transform({ position: new Vector3(origin.x, 0, origin.y) })
-  );
+export default function createBicycleScene({
+  name,
+  location
+}: SceneArgs): Entity {
+  const scene = createScene({ name, location });
 
   createGltfShape({
     model: "Bench_01/Bench_01.glb",

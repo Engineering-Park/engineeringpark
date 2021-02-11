@@ -11,12 +11,12 @@ import createStaticSystemStructureScene from "./scenes/createStaticSystemStructu
 const _scene = new Entity("_scene");
 engine.addEntity(_scene);
 
-// createGltfShape({
-//   model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
-//   name: "FloorBase",
-//   position: new Vector3(16, 0, 16),
-//   scale: new Vector3(2, 1, 2)
-// }).setParent(_scene);
+createGltfShape({
+  model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
+  name: "FloorBase",
+  position: new Vector3(16, 0, 16),
+  scale: new Vector3(2, 1, 2)
+}).setParent(_scene);
 
 const videoScene = createScene({
   name: "video_why",
@@ -34,6 +34,7 @@ addVideo({
 });
 
 createBicycleScene({
+  name: "scene_bicycle",
   location: { east: 69, north: 48 }
 }).setParent(_scene);
 
@@ -43,13 +44,16 @@ createAircraftScene({
 }).setParent(_scene);
 
 createParachuteScene({
+  name: "scene_parachute",
   location: { east: 69, north: 47 }
 }).setParent(_scene);
 
 createRailwayScene({
+  name: "scene_railway",
   location: { east: 68, north: 47 }
 }).setParent(_scene);
 
 createStaticSystemStructureScene({
+  name: "scene_sbs",
   location: { east: 69, north: 48 }
 }).setParent(_scene);

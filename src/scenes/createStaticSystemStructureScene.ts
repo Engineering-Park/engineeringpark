@@ -1,22 +1,13 @@
 import createGltfShape from "../entities/createGltfShape";
 import createLayout from "../entities/createLayout";
+import createScene, { SceneArgs } from "../entities/createScene";
 import createStaticModelLayout from "../se-toolkit/createStaticModelLayout";
-import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
-import { Location } from "../utils/Location";
-
-export interface Args {
-  location: Location; // the location of the entity in the DCL LAND coordinate system
-}
 
 export default function createStaticSystemStructureScene({
+  name,
   location
-}: Args): Entity {
-  const origin = getCoordinatesRelativeToBase(location);
-
-  const scene = new Entity("layout_scene");
-  scene.addComponentOrReplace(
-    new Transform({ position: new Vector3(origin.x, 0, origin.y) })
-  );
+}: SceneArgs): Entity {
+  const scene = createScene({ name, location });
 
   createGltfShape({
     model: "ConstructionSign_01/ConstructionSign_01.glb",

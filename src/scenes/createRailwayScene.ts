@@ -1,22 +1,21 @@
-import addAttribution from "../entities/addAttribution";
 import addSound from "../components/addSound";
+import addAttribution from "../entities/addAttribution";
 import createGltfShape from "../entities/createGltfShape";
-import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
-import { Location } from "../utils/Location";
+import createScene, { SceneArgs } from "../entities/createScene";
 
-export interface Args {
-  location: Location; // the location of the entity in the DCL LAND coordinate system
-}
-
-export default function createRailwayScene({ location }: Args): Entity {
-  const origin = getCoordinatesRelativeToBase(location);
+export default function createRailwayScene({
+  name,
+  location
+}: SceneArgs): Entity {
+  const scene = createScene({ name, location });
 
   const train = createGltfShape({
     model: "train.glb",
     name: "Train",
-    position: new Vector3(origin.x + 8, 0.1, origin.y + 8),
+    position: new Vector3(8, 0.1, 8),
     scale: new Vector3(0.25, 0.25, 0.25)
   });
+  train.setParent(scene);
 
   addSound({ entity: train, sound: "train.mp3" });
 
@@ -27,5 +26,5 @@ export default function createRailwayScene({ location }: Args): Entity {
     rotation: Quaternion.Euler(0, -90, 0)
   });
 
-  return train;
+  return scene;
 }

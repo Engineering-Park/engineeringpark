@@ -1,24 +1,14 @@
-import addAttribution from "../entities/addAttribution";
 import addSound from "../components/addSound";
+import addAttribution from "../entities/addAttribution";
 import createGltfShape from "../entities/createGltfShape";
+import createScene, { SceneArgs } from "../entities/createScene";
 import FlightSystem from "../systems/FlightSystem";
-import getCoordinatesRelativeToBase from "../utils/getCoordinatesRelativeToBase";
-import { Location } from "../utils/Location";
-import createScene from "../entities/createScene";
 
-export interface Args {
-  name: string; // the name of the scene
-  location: Location; // the location of the entity in the DCL LAND coordinate system
-}
-
-export default function createAircraftScene({ name, location }: Args): Entity {
+export default function createAircraftScene({
+  name,
+  location
+}: SceneArgs): Entity {
   const scene = createScene({ name, location });
-
-  createGltfShape({
-    model: "FloorBaseGrass_01/FloorBaseGrass_01.glb",
-    name: "FloorBase",
-    position: new Vector3(8, 0, 8)
-  }).setParent(scene);
 
   const aircraft = createGltfShape({
     model: "airplane.glb",
