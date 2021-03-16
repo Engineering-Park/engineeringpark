@@ -1,4 +1,4 @@
-import utils from "../../node_modules/decentraland-ecs-utils/index";
+import * as utils from "@dcl/ecs-scene-utils";
 
 export interface Args {
   parent: Entity; // the parent of the video entity
@@ -40,21 +40,14 @@ export default function addVideo({
     Vector3.Zero()
   );
   screen.addComponent(
-    new utils.TriggerComponent(
-      triggerBox, //shape
-      0, //layer
-      0, //triggeredByLayer
-      null, //onTriggerEnter
-      null, //onTriggerExit
-      () => {
-        //onCameraEnter
+    new utils.TriggerComponent(triggerBox, {
+      onCameraEnter: () => {
         videoTexture.play();
       },
-      () => {
-        //onCameraExit
+      onCameraExit: () => {
         videoTexture.pause();
       }
-    )
+    })
   );
 
   screen.setParent(parent);

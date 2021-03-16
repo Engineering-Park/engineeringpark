@@ -1,4 +1,4 @@
-import utils from "../../node_modules/decentraland-ecs-utils/index";
+import * as utils from "@dcl/ecs-scene-utils";
 
 export interface Args {
   entity: Entity; // the entity to which to attach the attribution text
@@ -18,20 +18,13 @@ export default function addSound({ entity, sound }: Args) {
     Vector3.Zero()
   );
   entity.addComponent(
-    new utils.TriggerComponent(
-      triggerBox, //shape
-      0, //layer
-      0, //triggeredByLayer
-      null, //onTriggerEnter
-      null, //onTriggerExit
-      () => {
-        //onCameraEnter
+    new utils.TriggerComponent(triggerBox, {
+      onCameraEnter: () => {
         audioSource.playing = true;
       },
-      () => {
-        //onCameraExit
+      onCameraExit: () => {
         audioSource.playing = false;
       }
-    )
+    })
   );
 }

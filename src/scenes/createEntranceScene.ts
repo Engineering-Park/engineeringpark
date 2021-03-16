@@ -1,4 +1,3 @@
-import createGltfShape from "../entities/createGltfShape";
 import createScene, { SceneArgs } from "../entities/createScene";
 
 export default function createBicycleScene({
